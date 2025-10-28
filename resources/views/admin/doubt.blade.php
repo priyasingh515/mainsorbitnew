@@ -1,0 +1,206 @@
+@extends('admin.layouts.app')
+
+@section('content')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<style>
+    .table td, .table th {
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+</style>
+<section class="content-header">					
+    <div class="container-fluid my-2">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Student Doubt List</h1>
+            </div>
+            {{-- <div class="col-sm-6 text-right">
+                <a href="{{route('evaluate.create')}}" class="btn btn-primary">Add About</a>
+            </div> --}}
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="container-fluid">
+        @include('admin.message')
+        <div class="card">
+            
+            <div class="card-body table-responsive p-0 mt-2">								
+                <table class="table table-hover text-nowrap datatable">
+                    <thead>
+                        <tr>
+                            <th width="60">ID</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Answer sheet</th>
+                            <th>Checked Answer sheet</th>
+                            <th>Student Doubt</th>
+                            <th>Doubt File</th>
+                            <th>Evaluator Reply</th>
+                            <th>Reply File</th>
+                            <th>Evaluator Name</th>
+                            <th>Status</th>
+                            <th width="100">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i =1;?>
+                        @foreach ($doubts as $dout)
+                        <tr>
+                            <td>{{$i++}}</td>
+                            <td>{{$dout->student_name ?? 'Demo'}}</td>
+                            <td>{{ \Carbon\Carbon::parse($dout->created_at)->format('d-M-Y') }}</td>
+                            <td>
+                                @if (!empty($dout->answer_pdf) && is_string($dout->answer_pdf))
+                                    <a href="{{ url('public/'.$dout->answer_pdf) }}" target="_blank">
+                                        <img src="{{ asset('/public/assets/front/img/logos/pd.png') }}" alt="Answer Pdf" height="50" width="50">
+                                    </a>
+                                @else
+                                    <span>No PDF</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if (!empty($dout->check_file) && is_string($dout->check_file))
+                                    <a href="{{ url('public/'.$dout->check_file) }}" target="_blank">
+                                        <img src="{{ asset('/public/assets/front/img/logos/pd.png') }}" alt="Answer Pdf" height="50" width="50">
+                                    </a>
+                                @else
+                                    <span>No PDF</span>
+                                @endif
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#viewModal" 
+                                        data-title="Description"
+                                        data-content="{{ $dout->description }}">
+                                    View
+                                </button>
+                            </td>
+                            <td>
+                                @if ($dout->doubt_file)
+                                    <a href="{{ url('public/'.$dout->doubt_file) }}" target="_blank">
+                                        <img src="{{ asset('/public/assets/front/img/logos/pd.png') }}" alt="Doubt File" height="50" width="50">
+                                    </a>
+                                @else
+                                    <span>No PDF</span>
+                                @endif
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#viewModal" 
+                                        data-title="Reply"
+                                        data-content="{{ $dout->reply }}">
+                                    View
+                                </button>
+                            </td>
+                            <td>
+                                @if ($dout->resolve_file)
+                                    <a href="{{ url('public/'.$dout->resolve_file) }}" target="_blank">
+                                        <img src="{{ asset('/public/assets/front/img/logos/pd.png') }}" alt="Doubt File" height="50" width="50">
+                                    </a>
+                                @else
+                                    <span>No PDF</span>
+                                @endif
+                            </td>
+                            <td> {{$dout->teacher_name}}</td>
+                            <td>
+                                @if($dout->status == 'pending')
+                                    <span class="badge bg-danger">Pending</span>
+                                @elseif($dout->status == 'active')
+                                    <span class="badge bg-success">Success</span>
+                                @endif
+                            </td>
+                            {{-- <td>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#messageModal" data-message="{{ $enq->message }}">
+                                    View
+                                </button>
+                            </td>
+                            <td>{{$enq->state}}</td> --}}
+                            
+                            <td>
+                                <a href="{{route('doubtDlt.delete',$dout->id)}}" class="text-danger" onclick="return confirm('Are you sure you want to delete this?');">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
+                <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="viewModalLabel">View</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body" id="modalContent">
+                          <!-- Content will be inserted here via JS -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>										
+            </div>
+          
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const viewModal = document.getElementById('viewModal');
+    viewModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const content = button.getAttribute('data-content');
+        const title = button.getAttribute('data-title');
+
+        const modalBody = viewModal.querySelector('.modal-body');
+        const modalTitle = viewModal.querySelector('.modal-title');
+
+        modalBody.textContent = content;
+        modalTitle.textContent = title;
+    });
+</script>
+@endsection
+
+@section('customJs')
+    <!-- DataTables Core + Bootstrap Integration -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.datatable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: [3] }
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if ($.fn.dataTable.isDataTable('.datatable')) {
+                $('.datatable').DataTable().destroy();
+            }
+
+            var table = $('.datatable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: [3] }
+                ]
+            });
+
+            $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search...'); // Add Bootstrap styling
+
+        });
+    </script>
+@endsection
