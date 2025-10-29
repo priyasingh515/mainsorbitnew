@@ -93,7 +93,7 @@
             <div class="container">
                 <div class="row align-items-end">
                     {{-- <div class="col-lg-6 d-none d-lg-block">
-                        <img src="{{asset('/public/assets/front/img/content/contact-img-01.jpg')}}" alt="...">
+                        <img src="{{asset('/assets/front/img/content/contact-img-01.jpg')}}" alt="...">
                     </div> --}}
                     <div class="col-lg-12">
                         <div class="faq-form">

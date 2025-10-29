@@ -9,28 +9,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="keywords" content="Mains Orbit" />
     <meta name="description" content="Mains Orbit" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <!-- title  -->
-    <title>Mains Orbit - @yield('title')</title>
+    <title>Mains Orbit - <?php echo $__env->yieldContent('title'); ?></title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('./assets/admin/img/logomain.png')}}" />
+    <link rel="shortcut icon" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
 
     <!-- plugins -->
-    <link rel="stylesheet" href="{{asset('/assets/front/css/plugins.css')}}" />
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/css/plugins.css')); ?>" />
 
     <link href="https://fonts.googleapis.com/css2?family=Gill+Sans:wght@400;700&display=swap" rel="stylesheet">
     <!-- search css -->
-    <link rel="stylesheet" href="{{asset('/assets/front/search/search.css')}}" />
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/search/search.css')); ?>" />
 
     <!-- quform css -->
-    <link rel="stylesheet" href="{{asset('/assets/front/quform/css/base.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/quform/css/base.css')); ?>">
 
     <!-- core style css -->
-    <link href="{{asset('/assets/front/css/styles.css')}}" rel="stylesheet" />
+    <link href="<?php echo e(asset('/assets/front/css/styles.css')); ?>" rel="stylesheet" />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -44,18 +44,7 @@
 
 </head>
 
-{{-- <style>
-    @media (max-width: 767px) {
-        .marquee-section h4 {
-            font-size: 10px;
-            text-align: center;
-            padding: 0 10px;
-        }
-        .marquee-section .badge {
-            margin-bottom: 4px;
-        }
-    }
-</style> --}}
+
 
 <style>
     .custom-background {
@@ -246,7 +235,7 @@
     }
 
 
-    @media screen and (max-width: 768px) {
+    @media  screen and (max-width: 768px) {
         .buy-theme {
             transition-timing-function: ease-in-out;
             transition-duration: .2s;
@@ -445,7 +434,7 @@
         animation: blinker 1s linear infinite;
     }
 
-    @keyframes blinker {
+    @keyframes  blinker {
         50% { opacity: 0; }
     }
 </style>
@@ -482,7 +471,8 @@
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
                                         <a href="/" class="navbar-brand"><img id="logo" src="
-                                            {{asset('./assets/admin/img/mainsorbit.png')}}
+                                            <?php echo e(asset('./assets/admin/img/mainsorbit.png')); ?>
+
                                             " alt="logo"/></a>
                                         <!-- end logo -->
                                     </div>
@@ -492,102 +482,102 @@
                                     <!-- start menu area -->
                                     <ul class="navbar-nav ms-auto" id="nav" style="display: none;">
                                         <li>
-                                            @auth
-                                                @if(Auth::user()->state == 'cg')
-                                                    <a href="{{ url('/cghome') }}">Home</a>
-                                                @elseif(Auth::user()->state == 'mp')
-                                                    <a href="{{ url('/mphome') }}">Home</a>
-                                                @else
+                                            <?php if(auth()->guard()->check()): ?>
+                                                <?php if(Auth::user()->state == 'cg'): ?>
+                                                    <a href="<?php echo e(url('/cghome')); ?>">Home</a>
+                                                <?php elseif(Auth::user()->state == 'mp'): ?>
+                                                    <a href="<?php echo e(url('/mphome')); ?>">Home</a>
+                                                <?php else: ?>
                                                    <a href="">Home</a>
-                                                @endif
-                                            @else
-                                                @if(Session::has('selected_state'))
-                                                    @if(Session::get('selected_state') == 'cg')
-                                                        <a href="{{ url('/cghome') }}">Home</a>
-                                                    @elseif(Session::get('selected_state') == 'mp')
-                                                        <a href="{{ url('/mphome') }}">Home</a>
-                                                    @else
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if(Session::has('selected_state')): ?>
+                                                    <?php if(Session::get('selected_state') == 'cg'): ?>
+                                                        <a href="<?php echo e(url('/cghome')); ?>">Home</a>
+                                                    <?php elseif(Session::get('selected_state') == 'mp'): ?>
+                                                        <a href="<?php echo e(url('/mphome')); ?>">Home</a>
+                                                    <?php else: ?>
                                                         <a href="">Home</a>
-                                                    @endif
-                                                @else
+                                                    <?php endif; ?>
+                                                <?php else: ?>
                                                    <a href="">Home</a>
-                                                @endif
-                                            @endauth
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                         </li>
                                         <li>
-                                            @auth
-                                                @if(Auth::user()->state == 'cg')
-                                                    <a href="{{ url('/cgplan') }}">Plans</a>
-                                                @elseif(Auth::user()->state == 'mp')
-                                                    <a href="{{ url('/ourplan') }}">Plans</a>
-                                                @else
+                                            <?php if(auth()->guard()->check()): ?>
+                                                <?php if(Auth::user()->state == 'cg'): ?>
+                                                    <a href="<?php echo e(url('/cgplan')); ?>">Plans</a>
+                                                <?php elseif(Auth::user()->state == 'mp'): ?>
+                                                    <a href="<?php echo e(url('/ourplan')); ?>">Plans</a>
+                                                <?php else: ?>
                                                     <a href="">Plans</a>
-                                                @endif
-                                            @else
-                                                @if(Session::has('selected_state'))
-                                                    @if(Session::get('selected_state') == 'cg')
-                                                      <a href="{{ url('/cgplan') }}">Plans</a>
-                                                    @elseif(Session::get('selected_state') == 'mp')
-                                                      <a href="{{ url('/ourplan') }}">Plans</a>
-                                                    @else
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if(Session::has('selected_state')): ?>
+                                                    <?php if(Session::get('selected_state') == 'cg'): ?>
+                                                      <a href="<?php echo e(url('/cgplan')); ?>">Plans</a>
+                                                    <?php elseif(Session::get('selected_state') == 'mp'): ?>
+                                                      <a href="<?php echo e(url('/ourplan')); ?>">Plans</a>
+                                                    <?php else: ?>
                                                       <a href="">Plans</a>
-                                                    @endif
-                                                @else
+                                                    <?php endif; ?>
+                                                <?php else: ?>
                                                    <a href="">Plans</a>
-                                                @endif
-                                            @endauth
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                         </li>
                                         <li>
-                                            @auth
-                                                @if(Auth::user()->state == 'cg')
-                                                    <a href="{{ url('/cgpyq') }}">PYQ</a>
-                                                @elseif(Auth::user()->state == 'mp')
-                                                    <a href="{{ url('/pyq') }}">PYQ</a>
-                                                @else
+                                            <?php if(auth()->guard()->check()): ?>
+                                                <?php if(Auth::user()->state == 'cg'): ?>
+                                                    <a href="<?php echo e(url('/cgpyq')); ?>">PYQ</a>
+                                                <?php elseif(Auth::user()->state == 'mp'): ?>
+                                                    <a href="<?php echo e(url('/pyq')); ?>">PYQ</a>
+                                                <?php else: ?>
                                                     <a href="">PYQ</a>
-                                                @endif
-                                            @else
-                                                @if(Session::has('selected_state'))
-                                                    @if(Session::get('selected_state') == 'cg')
-                                                      <a href="{{ url('/cgpyq') }}">PYQ</a>
-                                                    @elseif(Session::get('selected_state') == 'mp')
-                                                      <a href="{{ url('/pyq') }}">PYQ</a>
-                                                    @else
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if(Session::has('selected_state')): ?>
+                                                    <?php if(Session::get('selected_state') == 'cg'): ?>
+                                                      <a href="<?php echo e(url('/cgpyq')); ?>">PYQ</a>
+                                                    <?php elseif(Session::get('selected_state') == 'mp'): ?>
+                                                      <a href="<?php echo e(url('/pyq')); ?>">PYQ</a>
+                                                    <?php else: ?>
                                                         <a href="">PYQ</a>
-                                                    @endif
-                                                @else
+                                                    <?php endif; ?>
+                                                <?php else: ?>
                                                    <a href="">PYQ</a>
-                                                @endif
-                                            @endauth
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                         </li>
                                         <li>
-                                            @auth
-                                                @if(Auth::user()->state == 'cg')
-                                                  <a href="{{url('/cgMainsPractice')}}">Mains Practice Question</a>
-                                                @elseif(Auth::user()->state == 'mp')
-                                                  <a href="{{url('/MainsPractice')}}">Mains Practice Question</a>
-                                                @else
+                                            <?php if(auth()->guard()->check()): ?>
+                                                <?php if(Auth::user()->state == 'cg'): ?>
+                                                  <a href="<?php echo e(url('/cgMainsPractice')); ?>">Mains Practice Question</a>
+                                                <?php elseif(Auth::user()->state == 'mp'): ?>
+                                                  <a href="<?php echo e(url('/MainsPractice')); ?>">Mains Practice Question</a>
+                                                <?php else: ?>
                                                   <a href="">Mains Practice Question</a>
-                                                @endif
-                                            @else
-                                                @if(Session::has('selected_state'))
-                                                    @if(Session::get('selected_state') == 'cg')
-                                                      <a href="{{url('/cgMainsPractice')}}">Mains Practice Question</a>
-                                                    @elseif(Session::get('selected_state') == 'mp')
-                                                      <a href="{{url('/MainsPractice')}}">Mains Practice Question</a>
-                                                    @else
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <?php if(Session::has('selected_state')): ?>
+                                                    <?php if(Session::get('selected_state') == 'cg'): ?>
+                                                      <a href="<?php echo e(url('/cgMainsPractice')); ?>">Mains Practice Question</a>
+                                                    <?php elseif(Session::get('selected_state') == 'mp'): ?>
+                                                      <a href="<?php echo e(url('/MainsPractice')); ?>">Mains Practice Question</a>
+                                                    <?php else: ?>
                                                       <a href="">Mains Practice Question</a>
-                                                    @endif
-                                                @else
+                                                    <?php endif; ?>
+                                                <?php else: ?>
                                                   <a href="">Mains Practice Question</a>
-                                                @endif
-                                            @endauth
+                                                <?php endif; ?>
+                                            <?php endif; ?>
 
                                         </li>
-                                        <li><a href="{{url('/aboutus')}}">About</a></li>
-                                        <li><a href="{{url('/contact')}}">Contact</a></li>
-                                        @if(Auth::check())
-                                        @php
+                                        <li><a href="<?php echo e(url('/aboutus')); ?>">About</a></li>
+                                        <li><a href="<?php echo e(url('/contact')); ?>">Contact</a></li>
+                                        <?php if(Auth::check()): ?>
+                                        <?php
                                                 $user = Auth::user();
                                                 $districtName = 'Unknown';
                                             
@@ -596,34 +586,34 @@
                                                 } elseif ($user->state === 'mp') {
                                                     $districtName = DB::table('mp_district')->where('id', $user->district)->value('name');
                                                 }
-                                            @endphp
+                                            ?>
                                             <li>
-                                                <a href="{{route('user.answerForm')}}">My Account <i class="fas fa-user me-1"></i></a>
+                                                <a href="<?php echo e(route('user.answerForm')); ?>">My Account <i class="fas fa-user me-1"></i></a>
                                                 <ul class="" >
-                                                    <li><a href="{{ route('user.count') }}">View Profile</a></li>
-                                                    @if(Auth::check() && Auth::user()->name)
-                                                        <li><a href="#!"><i class="fas fa-user me-1"></i> {{ Auth::user()->name }}</a></li>
-                                                    @endif
-                                                    <li><a href=""><i class="fas fa-envelope me-1"></i> {{ Auth::user()->email }}</a></li>
-                                                    @if(!empty($districtName))
-                                                        <li><a href=""><i class="fas fa-map-marker-alt me-1"></i> {{ $districtName }}</a></li>
-                                                    @endif
+                                                    <li><a href="<?php echo e(route('user.count')); ?>">View Profile</a></li>
+                                                    <?php if(Auth::check() && Auth::user()->name): ?>
+                                                        <li><a href="#!"><i class="fas fa-user me-1"></i> <?php echo e(Auth::user()->name); ?></a></li>
+                                                    <?php endif; ?>
+                                                    <li><a href=""><i class="fas fa-envelope me-1"></i> <?php echo e(Auth::user()->email); ?></a></li>
+                                                    <?php if(!empty($districtName)): ?>
+                                                        <li><a href=""><i class="fas fa-map-marker-alt me-1"></i> <?php echo e($districtName); ?></a></li>
+                                                    <?php endif; ?>
                                                 </ul>
                                             </li>
 
                                             
                                             
-                                        @endif
+                                        <?php endif; ?>
                                         
                                     </ul>
                                     <div class="attr-nav align-items-xl-center ms-xl-auto main-font">
                                        
                                         <ul>
-                                            @if(Auth::check())
+                                            <?php if(Auth::check()): ?>
 
                                         
                                                 <li class="d-none d-xl-inline-block">
-                                                    <a href="{{route('user.logout')}}" class="butn md text-white">
+                                                    <a href="<?php echo e(route('user.logout')); ?>" class="butn md text-white">
                                                         <i class="fas fa-sign-out-alt icon-arrow before"></i>
                                                         <span class="label">Logout</span>
                                                         <i class="fas fa-sign-out-alt icon-arrow after"></i>
@@ -632,7 +622,7 @@
                                                 </li>
 
                                                 <li class="d-block d-xl-none">
-                                                    <a href="{{route('user.logout')}}" class="butn md text-white">
+                                                    <a href="<?php echo e(route('user.logout')); ?>" class="butn md text-white">
                                                         <i class="fas fa-sign-out-alt icon-arrow before"></i>
                                                         <span class="label">Logout</span>
                                                         <i class="fas fa-sign-out-alt icon-arrow after"></i>
@@ -640,22 +630,22 @@
                                                    
                                                 </li>
 
-                                            @else
+                                            <?php else: ?>
                                             <li class="d-block d-xl-none"> <!-- Mobile me dikhane ke liye -->
-                                                <a href="{{ route('login') }}" class="butnlogin butn md text-white p-0 " data-bs-toggle="modal" data-bs-target="#loginModal">
+                                                <a href="<?php echo e(route('login')); ?>" class="butnlogin butn md text-white p-0 " data-bs-toggle="modal" data-bs-target="#loginModal">
                                                     <i class="fas fa-user icon-arrow before"></i>
                                                     <span class="label">Login</span>
                                                     <i class="fas fa-user icon-arrow after"></i>
                                                 </a>
                                             </li>
                                             <li class="d-none d-xl-inline-block"> <!-- Sirf desktop par dikhane ke liye -->
-                                                <a href="{{ route('login') }}" class="butnlogin butn md text-white" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                                <a href="<?php echo e(route('login')); ?>" class="butnlogin butn md text-white" data-bs-toggle="modal" data-bs-target="#loginModal">
                                                     <i class="fas fa-plus-circle icon-arrow before"></i>
                                                     <span class="label">Login</span>
                                                     <i class="fas fa-plus-circle icon-arrow after"></i>
                                                 </a>
                                             </li>
-                                            @endif
+                                            <?php endif; ?>
                                         </ul>
                                         
                                     </div>
@@ -665,20 +655,21 @@
                         </div>
                     </div>
                 </div>
-                @if(!empty($offers->description))
+                <?php if(!empty($offers->description)): ?>
                     <section class="marquee-section py-2" style="background: #2c316f1f; overflow: hidden;">
                         <div class="container">
                             <div class="marquee-wrapper d-flex justify-content-center align-items-center flex-wrap text-center">
                                 <div class="d-flex align-items-center flex-wrap justify-content-center">
                                     <span class="badge bg-danger text-white me-2 blinking mb-1">Offer</span>
                                     <h4 style="color: rgb(220, 53, 69); font-size: 16px; margin: 0; white-space: normal; line-height: 1.4;">
-                                        {{ $offers->description }}
+                                        <?php echo e($offers->description); ?>
+
                                     </h4>
                                 </div>
                             </div>
                         </div>
                     </section>
-                @endif
+                <?php endif; ?>
             </div>
         </header>
         <div class="modal fade" id="loginModal" tabindex="-1">
@@ -686,7 +677,7 @@
                 <div class="modal-content custom-modal-content">
 
                     <div class="modal-header">
-                        <img src="{{ asset('./assets/admin/img/mainsorbit.png') }}" alt="Logo" height="200" width="250">
+                        <img src="<?php echo e(asset('./assets/admin/img/mainsorbit.png')); ?>" alt="Logo" height="200" width="250">
                         <button type="button" class="btn position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fa-solid fa-xmark" style="color: #ff7029; font-size: 1.2rem;"></i>
                         </button>
@@ -696,7 +687,7 @@
 
                         <!-- Google Login Button -->
                         <button id="loginBtn" class="btn w-100 d-flex align-items-center justify-content-center py-2 loginb">
-                            <img src="{{ asset('/assets/front/img/logos/google.png') }}" 
+                            <img src="<?php echo e(asset('/assets/front/img/logos/google.png')); ?>" 
                                 alt="Google Logo" width="20" class="me-2">
                             Login with Google
                         </button>
@@ -710,37 +701,51 @@
                         <hr>
 
                         <!-- Email Form -->
-                        @if(!session('otp_sent'))
-                        <form action="{{ route('send.otp') }}" method="post" id="emailForm">
-                            @csrf
+                        <?php if(!session('otp_sent')): ?>
+                        <form action="<?php echo e(route('send.otp')); ?>" method="post" id="emailForm">
+                            <?php echo csrf_field(); ?>
                             <div class="mb-3">
                                 <input type="email" class="form-control" placeholder="Email" name="email" id="emailInput" required>
-                                @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+                                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <small class="text-danger"><?php echo e($message); ?></small> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <button type="submit" class="btn btn-login w-100">Send OTP</button>
                         </form>
-                        @endif
+                        <?php endif; ?>
 
                         <!-- OTP Verification Form -->
-                        @if(session('otp_sent'))
-                        <form action="{{ route('verify.otp') }}" method="post" id="otpForm">
-                            @csrf
+                        <?php if(session('otp_sent')): ?>
+                        <form action="<?php echo e(route('verify.otp')); ?>" method="post" id="otpForm">
+                            <?php echo csrf_field(); ?>
                             <div class="mb-3">
                                 <label for="otp" class="form-label">Enter OTP</label>
                                 <input type="text" class="form-control" name="otp" required>
-                                @error('otp') <small class="text-danger">{{ $message }}</small> @enderror
+                                <?php $__errorArgs = ['otp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <small class="text-danger"><?php echo e($message); ?></small> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <p style="font-size: 10px">
                                 <i class="fa-solid fa-circle-exclamation"></i> In case if you haven't received OTP please check your spam folder.
                             </p>
                             <button type="submit" class="btn btn-login w-100">Verify OTP</button>
                         </form>
-                        <form action="{{route('resend.otp')}}" method="post" class="mt-2">
-                            @csrf
-                            <input type="hidden" name="email" value="{{ session('email') }}">
+                        <form action="<?php echo e(route('resend.otp')); ?>" method="post" class="mt-2">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="email" value="<?php echo e(session('email')); ?>">
                             <button type="submit" class="btn btn-outline-primary w-100">Resend OTP</button>
                         </form>
-                        @endif
+                        <?php endif; ?>
 
                     </div>
                 </div>
@@ -749,10 +754,10 @@
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     // Check if session has OTP sent message
-                    @if(session('otp_sent'))
+                    <?php if(session('otp_sent')): ?>
                         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
                         loginModal.show();
-                    @endif
+                    <?php endif; ?>
                 });
 
                 document.addEventListener('click', function(event) {
@@ -771,7 +776,7 @@
 
                 document.getElementById('userDropdown').addEventListener('click', function(e) {
                     if (window.innerWidth < 992) { // mobile view
-                        window.location.href = "{{ route('user.count') }}";
+                        window.location.href = "<?php echo e(route('user.count')); ?>";
                     }
                 });
             </script>
@@ -779,25 +784,25 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                @if(session('success'))
+                <?php if(session('success')): ?>
                     Swal.fire({
                         title: "Submitted!",
-                        text: "{{ session('success') }}",
+                        text: "<?php echo e(session('success')); ?>",
                         icon: "success",
                         confirmButtonColor: "#3085d6",
                         confirmButtonText: "OK"
                     })
-                @endif
+                <?php endif; ?>
 
-                @if(session('error'))
+                <?php if(session('error')): ?>
                     Swal.fire({
                         title: "Oops!",
-                        text: "{{ session('error') }}",
+                        text: "<?php echo e(session('error')); ?>",
                         icon: "error",
                         confirmButtonColor: "#d33",
                         confirmButtonText: "Try Again"
                     });
-                @endif
+                <?php endif; ?>
             });
         </script>
-        
+        <?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/layouts/header.blade.php ENDPATH**/ ?>

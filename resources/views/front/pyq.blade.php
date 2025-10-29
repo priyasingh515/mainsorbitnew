@@ -26,7 +26,7 @@
                             <div class="category-item-01">
                                 <a href="{{ url($question->pdf_path) }}" class="d-block text-decoration-none" target="_blank">
                                     <div class="category-img text-center">
-                                        <img src="{{asset('/public/assets/pdf_img/pdficons.jpg')}}" alt="PDF Icon" height="50" width="50">
+                                        <img src="{{asset('/assets/pdf_img/pdficons.jpg')}}" alt="PDF Icon" height="50" width="50">
                                     </div>
                                     <div class="ms-3 text-center">
                                         <h3 class="h4 mb-0 text-white">{{ $question->paper_name }}</h3>

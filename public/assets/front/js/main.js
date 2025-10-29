@@ -29,10 +29,10 @@
         o = t(".navbar-brand.logodefault img");
       e <= 50
         ? (t("header").removeClass("scrollHeader").addClass("fixedHeader"),
-          a.attr("src", "/public/assets/admin/img/mainsorbit.png"))
+          a.attr("src", "/assets/admin/img/mainsorbit.png"))
         : (t("header").removeClass("fixedHeader").addClass("scrollHeader"),
-          a.attr("src", "/public/assets/admin/img/mainsorbit.png")),
-        o.attr("src", "/public/assets/admin/img/mainsorbit.png");
+          a.attr("src", "/assets/admin/img/mainsorbit.png")),
+        o.attr("src", "/assets/admin/img/mainsorbit.png");
     }),
     s.on("scroll", function () {
       500 < t(this).scrollTop()

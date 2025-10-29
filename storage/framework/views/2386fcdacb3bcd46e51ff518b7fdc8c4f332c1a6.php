@@ -11,25 +11,25 @@
     <meta name="description" content="Mains Orbit" />
 
     <!-- title  -->
-    <title>@yield('title')</title>
+    <title><?php echo $__env->yieldContent('title'); ?></title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('./assets/admin/img/logomain.png')}}" />
-    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('./assets/admin/img/logomain.png')}}" />
+    <link rel="shortcut icon" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e(asset('./assets/admin/img/logomain.png')); ?>" />
 
     <!-- plugins -->
-    <link rel="stylesheet" href="{{asset('/assets/front/css/plugins.css')}}" />
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/css/plugins.css')); ?>" />
 
     <!-- search css -->
-    <link rel="stylesheet" href="{{asset('/assets/front/search/search.css')}}" />
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/search/search.css')); ?>" />
 
     <!-- quform css -->
-    <link rel="stylesheet" href="{{asset('/assets/front/quform/css/base.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('/assets/front/quform/css/base.css')); ?>">
 
     <!-- core style css -->
-    <link href="{{asset('/assets/front/css/styles.css')}}" rel="stylesheet" />
+    <link href="<?php echo e(asset('/assets/front/css/styles.css')); ?>" rel="stylesheet" />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -72,25 +72,25 @@
 
 <body>
 
-    @if(session('error'))
+    <?php if(session('error')): ?>
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '{{ session("error") }}'
+                text: '<?php echo e(session("error")); ?>'
             })
         </script>
-    @endif
+    <?php endif; ?>
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: '{{ session("success") }}'
+                text: '<?php echo e(session("success")); ?>'
             })
         </script>
-    @endif
+    <?php endif; ?>
 
     <div class="main-wrapper">
 
@@ -123,19 +123,17 @@
                                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
-                                        <a href="/" class="navbar-brand"><img id="logo" src="{{asset('./assets/admin/img/mainsorbit.png')}}" alt="logo" /></a>
+                                        <a href="/" class="navbar-brand"><img id="logo" src="<?php echo e(asset('./assets/admin/img/mainsorbit.png')); ?>" alt="logo" /></a>
                                         <!-- end logo -->
                                     </div>
 
-                                    {{-- <div class="navbar-toggler bg-primary"></div> --}}
+                                    
 
                                     <!-- start menu area -->
                                     <ul class="navbar-nav ms-auto" id="nav" style="display: none;">
                                         
-                                        {{-- <li><a href="">Contact Us : <span style="color: white">{{$settingsData->mobile}}</span></a></li> --}}
-                                        {{-- <li>
-                                            <a href="tel:+91{{$settingsData->mobile}}">Contact Us : <span style="color: white" class="contact-number">{{$settingsData->mobile}}</span></a>
-                                        </li> --}}
+                                        
+                                        
                                     </ul>
                                     <!-- end menu area -->
 
@@ -155,27 +153,13 @@
                 <div class="owl-theme w-100">
                     <div class="item bg-img cover-background pt-6 pb-10 pt-sm-6 pb-sm-14 py-md-16 py-lg-20 py-xxl-24 left-overlay-dark" 
                         data-overlay-dark="8" 
-                        data-background="{{url('/'.$settingsData->banner)}}">
+                        data-background="<?php echo e(url('/'.$settingsData->banner)); ?>">
                         
                         <div class="container pt-6 pt-md-0 text-center">
                             <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-8 col-xl-7 mb-1-9 mb-lg-0 py-6 position-relative">
                                     
-                                    {{-- <a href="{{route('cghome')}}" 
-                                       class="butn my-3 mx-2 text-center d-block" 
-                                       style="font-size: 1.5rem; padding: 15px 30px;">
-                                        <i class="fas fa-plus-circle icon-arrow before"></i>
-                                        <span class="label">CG PSC</span>
-                                        <i class="fas fa-plus-circle icon-arrow after"></i>
-                                    </a>
-        
-                                    <a href="{{route('mphome')}}" 
-                                       class="butn white my-3 mx-2 text-center d-block" 
-                                       style="font-size: 1.5rem; padding: 15px 30px;">
-                                        <i class="fas fa-plus-circle icon-arrow before"></i>
-                                        <span class="label">MP PSC</span>
-                                        <i class="fas fa-plus-circle icon-arrow after"></i>
-                                    </a> --}}
+                                    
 
                                     <a href="javascript:void(0);" 
                                         onclick="setStateAndRedirect('cg')" 
@@ -195,7 +179,7 @@
                                             <i class="fas fa-plus-circle icon-arrow after"></i>
                                     </a>
         
-                                    <h2 class="font-weight-600 title text-white mt-4">{{$settingsData->heading}}</h2>
+                                    <h2 class="font-weight-600 title text-white mt-4"><?php echo e($settingsData->heading); ?></h2>
                                 </div>
                             </div>
                         </div>
@@ -214,46 +198,46 @@
     <!-- end scroll to top -->
 
     <!-- jQuery -->
-    <script src="{{asset('/assets/front/js/jquery.min.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/js/jquery.min.js')); ?>"></script>
 
     <!-- popper js -->
-    <script src="{{asset('/assets/front/js/popper.min.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/js/popper.min.js')); ?>"></script>
 
     <!-- bootstrap -->
-    <script src="{{asset('/assets/front/js/bootstrap.min.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/js/bootstrap.min.js')); ?>"></script>
 
     <!-- core.min.js -->
-    <script src="{{asset('/assets/front/js/core.min.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/js/core.min.js')); ?>"></script>
 
     <!-- search -->
-    <script src="{{asset('/assets/front/search/search.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/search/search.js')); ?>"></script>
 
     <!-- custom scripts -->
-    <script src="{{asset('/assets/front/js/main.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/js/main.js')); ?>"></script>
 
     <!-- form plugins js -->
-    <script src="{{asset('/assets/front/quform/js/plugins.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/quform/js/plugins.js')); ?>"></script>
 
     <!-- form scripts js -->
-    <script src="{{asset('/assets/front/quform/js/scripts.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/front/quform/js/scripts.js')); ?>"></script>
 
     <!-- all js include end -->
 
     <script>
         function setStateAndRedirect(state) {
-            fetch("{{ route('set.state.session') }}", {
+            fetch("<?php echo e(route('set.state.session')); ?>", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    "X-CSRF-TOKEN": "<?php echo e(csrf_token()); ?>"
                 },
                 body: JSON.stringify({ state: state })
             }).then(response => {
                 if (response.ok) {
                     if (state === "cg") {
-                        window.location.href = "{{ route('cghome') }}"; // CG ke liye redirect
+                        window.location.href = "<?php echo e(route('cghome')); ?>"; // CG ke liye redirect
                     } else if (state === "mp") {
-                        window.location.href = "{{ route('mphome') }}"; // MP ke liye redirect
+                        window.location.href = "<?php echo e(route('mphome')); ?>"; // MP ke liye redirect
                     }
                 }
             });
@@ -262,4 +246,4 @@
     
 </body>
 
-</html>
+</html><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/home.blade.php ENDPATH**/ ?>

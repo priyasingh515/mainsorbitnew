@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6 col-lg-3 mb-2-5 mb-lg-0">
                 <a href="/" class="footer-logo">
-                    <img src="{{asset('/public/assets/admin/img/mainsorbit.png')}}" height="170" width="auto" class="mb-4" alt="Footer Logo">
+                    <img src="{{asset('/assets/admin/img/mainsorbit.png')}}" height="170" width="auto" class="mb-4" alt="Footer Logo">
                 </a>
                 <p class="mb-1-6 text-white">
                 At MAINSORBIT, our mission is to provide high-quality, structured, and strategic ANSWER WRITING PLATFORM that empowers students to achieve their goals by further focusing on MAINS preparation. 
@@ -196,17 +196,17 @@
         @auth
             @if(Auth::user()->state == 'cg')
                 <a href="https://t.me/mainsorbit_cgpsc" target="_blank">
-                    <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                    <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                     <span>Join Telegram</span>
                 </a>
             @elseif(Auth::user()->state == 'mp')
                 <a href="https://t.me/mainsorbit_mppsc" target="_blank">
-                    <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                    <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                     <span>Join Telegram</span>
                 </a>
             @else
                 <a href="" target="_blank">
-                    <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                    <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                     <span>Join Telegram</span>
                 </a>
             @endif
@@ -214,17 +214,17 @@
             @if(Session::has('selected_state'))
                 @if(Session::get('selected_state') == 'cg')
                     <a href="https://t.me/mainsorbit_cgpsc" target="_blank">
-                        <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                        <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                         <span>Join Telegram</span>
                     </a>
                 @elseif(Session::get('selected_state') == 'mp')
                     <a href="https://t.me/mainsorbit_mppsc" target="_blank">
-                        <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                        <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                         <span>Join Telegram</span>
                     </a>
                 @else
                     <a href="https://t.me/mainsorbit_cgpsc" target="_blank">
-                        <img src="{{ asset('/public/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
+                        <img src="{{ asset('/assets/front/img/logos/telegram.png') }}" alt="" height="50" width="50">
                         <span>Join Telegram</span>
                     </a>
                 @endif
@@ -263,28 +263,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- jQuery -->
-    <script src="{{asset('/public/assets/front/js/jquery.min.js')}}"></script>
+    <script src="{{asset('/assets/front/js/jquery.min.js')}}"></script>
 
     <!-- popper js -->
-    <script src="{{asset('/public/assets/front/js/popper.min.js')}}"></script>
+    <script src="{{asset('/assets/front/js/popper.min.js')}}"></script>
 
     <!-- bootstrap -->
-    <script src="{{asset('/public/assets/front/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('/assets/front/js/bootstrap.min.js')}}"></script>
 
     <!-- core.min.js -->
-    <script src="{{asset('/public/assets/front/js/core.min.js')}}"></script>
+    <script src="{{asset('/assets/front/js/core.min.js')}}"></script>
 
     <!-- search -->
-    <script src="{{asset('/public/assets/front/search/search.js')}}"></script>
+    <script src="{{asset('/assets/front/search/search.js')}}"></script>
 
     <!-- custom scripts -->
-    <script src="{{asset('/public/assets/front/js/main.js')}}"></script>
+    <script src="{{asset('/assets/front/js/main.js')}}"></script>
 
     <!-- form plugins js -->
-    <script src="{{asset('/public/assets/front/quform/js/plugins.js')}}"></script>
+    <script src="{{asset('/assets/front/quform/js/plugins.js')}}"></script>
 
     <!-- form scripts js -->
-    <script src="{{asset('/public/assets/front/quform/js/scripts.js')}}"></script>
+    <script src="{{asset('/assets/front/quform/js/scripts.js')}}"></script>
 
   
 <!-- jQuery (if not already included) -->

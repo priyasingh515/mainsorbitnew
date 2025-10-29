@@ -23,9 +23,9 @@
                         <div class="col-lg-6 col-xl-7 mt-1-9">
                             <div class="text-lg-center position-relative">
                                 <div class="about-img">
-                                    <img src="{{asset('/public/assets/front/img/about.jpg')}}" alt="..."  class="position-relative z-index-1" style="max-width: 80%">
+                                    <img src="{{asset('/assets/front/img/about.jpg')}}" alt="..."  class="position-relative z-index-1" style="max-width: 80%">
                                 </div>
-                                <img src="{{asset('/public/assets/front/img/bg/bg-07.png')}}" class="bg-shape1 d-none d-lg-inline-block" alt="...">
+                                <img src="{{asset('/assets/front/img/bg/bg-07.png')}}" class="bg-shape1 d-none d-lg-inline-block" alt="...">
                             </div>
                         </div>
                         <div class="col-lg-6 col-xl-5 mt-1-9">
@@ -38,13 +38,13 @@
                         </div>
                     </div>
                     <div class="shape20">
-                        <img src="{{asset('/public/assets/front/img/bg/bg-02.jpg')}}" alt="...">
+                        <img src="{{asset('/assets/front/img/bg/bg-02.jpg')}}" alt="...">
                     </div>
                     <div class="shape18">
-                        <img src="{{asset('/public/assets/front/img/bg/bg-01.jpg')}}" alt="...">
+                        <img src="{{asset('/assets/front/img/bg/bg-01.jpg')}}" alt="...">
                     </div>
                     <div class="shape21">
-                        <img src="{{asset('/public/assets/front/img/bg/bg-03.jpg')}}" alt="...">
+                        <img src="{{asset('/assets/front/img/bg/bg-03.jpg')}}" alt="...">
                     </div>
                 </div>
             </section>

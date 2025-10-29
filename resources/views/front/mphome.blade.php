@@ -872,7 +872,7 @@
             @endforeach
                 <!-- Image -->
                 <div class="col-12 col-md-6 order-2 order-md-2 mb-4 mb-md-0 text-center">
-                    <img src="{{asset('/public/assets/front/img/mppsc.png')}}" 
+                    <img src="{{asset('/assets/front/img/mppsc.png')}}" 
                         alt="Hero Illustration" 
                         class="img-fluid hero-img">
                 </div>
@@ -961,7 +961,7 @@
                 <div class="team-container">
                     @foreach ($Guides as $guide)
                         <div class="team-member">
-                            <img src="{{ asset('/public/admin/guide/'.$guide->photos) }}" alt="{{ $guide->name }}">
+                            <img src="{{ asset('/admin/guide/'.$guide->photos) }}" alt="{{ $guide->name }}">
                             <h3 style="color: rgba(9, 67, 109, 0.87)">{{ $guide->rank }}</h3>
                             <h6 style="color: black">{{ strtoupper($guide->name) }}</h6>
                             <p style="color: black; margin-top:-5px;font-size:12px"><b>{{ $guide->post }}</b></p>
@@ -1098,9 +1098,9 @@
                     @foreach ( $questionpapers as $question)
                         <div class="col-6 col-lg-4 col-xl-3 mt-1-9">
                             <div class="category-item-01 shadow " style="height:200px">
-                                <a href="{{ url('/public/'.$question->pdf_path) }}" class="d-block text-decoration-none" target="_blank">
+                                <a href="{{ url('/'.$question->pdf_path) }}" class="d-block text-decoration-none" target="_blank">
                                     <div class="category-img text-center">
-                                        <img src="{{asset('/public/assets/front/img/logos/pd.png')}}" alt="PDF Icon" height="80" width="80">
+                                        <img src="{{asset('/assets/front/img/logos/pd.png')}}" alt="PDF Icon" height="80" width="80">
                                     </div>
                                     <div class="ms-3 text-center">
                                         <h4 class="mb-0 evaluate">{{ $question->paper_name }}</h4>

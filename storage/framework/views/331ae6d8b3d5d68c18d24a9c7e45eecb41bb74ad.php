@@ -1,6 +1,6 @@
-@extends('front.layouts.master')
-@section('title', 'Home')
-@section('content')
+
+<?php $__env->startSection('title', 'Home'); ?>
+<?php $__env->startSection('content'); ?>
 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -675,23 +675,25 @@
             <div class="row align-items-center text-center text-md-start">
 
             <!-- Text -->
-            @foreach ($slider as $item)
+            <?php $__currentLoopData = $slider; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-12 col-md-6 order-1 order-md-1">
                     <h1 class="display-7 fw-bold mb-4 custom-heading">
-                    {{$item->heading}}
+                    <?php echo e($item->heading); ?>
+
                     </h1>
                     <p class="lead text-muted mb-4 custom-para">
-                        {{$item->paragraph}}
+                        <?php echo e($item->paragraph); ?>
+
                     </p>
 
                     <!-- Desktop buttons -->
                     <div class="d-none d-md-flex flex-row gap-3">
-                        <a href="{{route('user.questionadd')}}" class="butn  btn-lg">
+                        <a href="<?php echo e(route('user.questionadd')); ?>" class="butn  btn-lg">
                             <i class="fas fa-plus-circle icon-arrow before"></i>
                             <span class="label"style="font-size: 20px">Take a Demo</span>
                             <i class="fas fa-plus-circle icon-arrow after"></i>
                         </a>
-                        @php
+                        <?php
                             $planLink = '';
                             if (auth()->check()) {
                                 if (Auth::user()->state == 'cg') {
@@ -706,31 +708,31 @@
                                     $planLink = url('ourplan');
                                 }
                             }
-                        @endphp
-                        <a href="{{ $planLink }}" class="butn btn-outline-primary btn-lg">
+                        ?>
+                        <a href="<?php echo e($planLink); ?>" class="butn btn-outline-primary btn-lg">
                             <i class="fas fa-plus-circle icon-arrow before"></i>
                             <span class="label"style="font-size: 20px">Pick a Plan</span>
                             <i class="fas fa-plus-circle icon-arrow after"></i>
                         </a>
                     </div>
                 </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 <!-- Image -->
                 <div class="col-12 col-md-6 order-2 order-md-2 mb-4 mb-md-0 text-center">
-                    <img src="{{asset('/assets/front/img/cgpsc.png')}}" 
+                    <img src="<?php echo e(asset('/assets/front/img/cgpsc.png')); ?>" 
                         alt="Hero Illustration" 
                         class="img-fluid hero-img">
                 </div>
 
                 <!-- Mobile Buttons -->
                 <div class="col-12 order-3 d-flex d-md-none flex-column gap-3 center-box">
-                    <a href="{{route('user.questionadd')}}" class="butn w-75">
+                    <a href="<?php echo e(route('user.questionadd')); ?>" class="butn w-75">
                         <i class="fas fa-plus-circle icon-arrow before"></i>
                         <span class="label" style="font-size: 25px">Take a Demo</span>
                         <i class="fas fa-plus-circle icon-arrow after"></i>
                     </a>
-                    <a href="{{ $planLink }}" class="butn btn-outline-primary w-75">
+                    <a href="<?php echo e($planLink); ?>" class="butn btn-outline-primary w-75">
                         <i class="fas fa-plus-circle icon-arrow before"></i>
                         <span class="label" style="font-size: 25px">Pick a Plan</span>
                         <i class="fas fa-plus-circle icon-arrow after"></i>
@@ -757,7 +759,7 @@
                             </div>
                             <div>
                                 <p class="mb-3">Choose questions from any source including our mains practice question.</p>
-                                {{-- <a href="{{route('aboutus')}}" class="butn-style1 secondary">View More +</a> --}}
+                                
                             </div>
                         </div>
                     </div>
@@ -773,7 +775,7 @@
                             </div>
                             <div>
                                 <p class="mb-3">Upload your answer on your dashboard for evaluation.</p>
-                                {{-- <a href="{{route('aboutus')}}" class="butn-style1 secondary">View More +</a> --}}
+                                
                             </div>
                         </div>
                     </div>
@@ -789,7 +791,7 @@
                             </div>
                             <div>
                                 <p class="mb-3">Get Your answer evaluated and get suggestion  for better score by selected or interview appeared faculty.</p>
-                                {{-- <a href="{{route('aboutus')}}" class="butn-style1 secondary">View More +</a> --}}
+                                
                             </div>
                         </div>
                     </div>
@@ -798,79 +800,79 @@
         </div>
     </section>
 
-    @if(count($Guides) > 0)
+    <?php if(count($Guides) > 0): ?>
         <section style="background: #fefefe">
             <div class="section-heading guide">
                 <h2 class="h1 mb-0">Under The Guidance Of</h2>
             </div>
             <div class="team-section">
                 <div class="team-container">
-                    @foreach ($Guides as $guide)
+                    <?php $__currentLoopData = $Guides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $guide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="team-member">
-                            <img src="{{ asset('admin/guide/'.$guide->photos) }}" alt="{{ $guide->name }}">
-                            <h3 style="color: rgba(9, 67, 109, 0.87)">{{ $guide->rank }}</h3>
-                            <h6 style="color: black">{{ strtoupper($guide->name) }}</h6>
-                            <p style="color: black; margin-top:-5px;font-size:12px"><b>{{ $guide->post }}</b></p>
+                            <img src="<?php echo e(asset('admin/guide/'.$guide->photos)); ?>" alt="<?php echo e($guide->name); ?>">
+                            <h3 style="color: rgba(9, 67, 109, 0.87)"><?php echo e($guide->rank); ?></h3>
+                            <h6 style="color: black"><?php echo e(strtoupper($guide->name)); ?></h6>
+                            <p style="color: black; margin-top:-5px;font-size:12px"><b><?php echo e($guide->post); ?></b></p>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
         </section>
-    @endif
+    <?php endif; ?>
 
     <section class="bg-light" >
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-heading text-center">
-                        {{-- <span class="sub-title">Sample Evaluation</span> --}}
+                        
                         <h2 class="h1 mb-0" style="color: #2c316f">Sample Evaluation</h2>
                     </div>
                 </div>
             </div>
             <div class="row mt-n1-9">
-                @foreach ( $samples as $sample)
+                <?php $__currentLoopData = $samples; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sample): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-6 col-lg-4 col-xl-3 mt-1-9">
                         <div class="category-item-01 shadow " style="height:200px">
-                            <a href="{{ url('/admin/sample/'.$sample->sample_file) }}" class="d-block text-decoration-none" target="_blank">
+                            <a href="<?php echo e(url('/admin/sample/'.$sample->sample_file)); ?>" class="d-block text-decoration-none" target="_blank">
                                 <div class="category-img text-center">
-                                    <img src="{{asset('/assets/front/img/logos/pd.png')}}" alt="PDF Icon" height="80" width="80">
+                                    <img src="<?php echo e(asset('/assets/front/img/logos/pd.png')); ?>" alt="PDF Icon" height="80" width="80">
                                 </div>
                                 <div class="ms-3 text-center">
-                                    <h4 class="mb-0 evaluate">{{ $sample->name }}</h4>
+                                    <h4 class="mb-0 evaluate"><?php echo e($sample->name); ?></h4>
                                 </div>
                             </a>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
     </section>
 
-    @if($plans->count() > 0)
+    <?php if($plans->count() > 0): ?>
     <section>
         <div class="container">
             <div class="section-heading">
                 <h2 class="h1 mb-0">Our Plans</h2>
             </div>
             <div class="row align-items-center g-xl-5 mt-n1-9">
-                @foreach ($plans as $plan)
+                <?php $__currentLoopData = $plans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-md-6 col-lg-4 mt-1-9">
                         <div class="card card-style4 p-1-9 p-xl-5">
                             <div class="border-bottom pb-1-9 mb-1-9 section-heading">
-                                <span class=" sub-title d-block">{{$plan->plan_name}}</span>
-                                <h4 class="text-dark display-5 display-xxl-4 mb-0 lh-1 fw-bold">{{$plan->price}}<span class="display-29">/₹</span></h4>
+                                <span class=" sub-title d-block"><?php echo e($plan->plan_name); ?></span>
+                                <h4 class="text-dark display-5 display-xxl-4 mb-0 lh-1 fw-bold"><?php echo e($plan->price); ?><span class="display-29">/₹</span></h4>
                             </div>
                             <ul class="list-unstyled mb-2-9">
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->plan_validity}}</li>
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->description_1}}</li>
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->description_2}}</li>
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->description_3}}</li>
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->description_4}}</li>
-                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i>{{$plan->medium}}</li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->plan_validity); ?></li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->description_1); ?></li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->description_2); ?></li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->description_3); ?></li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->description_4); ?></li>
+                                <li class="mb-3"><i class="fas fa-check text-primary me-3"></i><?php echo e($plan->medium); ?></li>
                             </ul>
                             <div>
-                                <a href="javascript:void(0);" onclick="checkLogin({{ json_encode($plan->id) }})" class="butn">
+                                <a href="javascript:void(0);" onclick="checkLogin(<?php echo e(json_encode($plan->id)); ?>)" class="butn">
                                     <i class="far fa-gem icon-arrow before"></i>
                                     <span class="label">Choose Plan</span>
                                     <i class="far fa-gem icon-arrow after"></i>
@@ -878,19 +880,19 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 
             </div>
             <div class="d-flex justify-content-end mt-4">
-                <a href="{{url('cgplan')}}" style="color:#2c316f">
+                <a href="<?php echo e(url('cgplan')); ?>" style="color:#2c316f">
                     <b>View More</b> <i class="fas fa-arrow-right"></i> 
                 </a>
         </div>
         </div>
     </section>
-    @endif
+    <?php endif; ?>
 
-    <input type="hidden" id="auth_user" value="{{ Auth::check() ? '1' : '0' }}">
+    <input type="hidden" id="auth_user" value="<?php echo e(Auth::check() ? '1' : '0'); ?>">
 
     <div class="modal fade" id="purchasePlanModal" tabindex="-1" aria-labelledby="purchasePlanModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -901,7 +903,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="purchasePlanForm">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <input type="hidden" name="plan_id" id="plan_id">
     
                         <div class="mb-3">
@@ -918,9 +920,9 @@
                             <label for="district" class="form-label">District</label>
                             <select class="form-control" id="district" name="district" required>
                                 <option value="">Select District</option>
-                                    @foreach ($cgDistricts as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $cgDistricts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
     
@@ -930,7 +932,7 @@
             </div>
         </div>
     </div>
-     @if($questionpapers->count() > 0)
+     <?php if($questionpapers->count() > 0): ?>
         <section class="bg-light" >
             <div class="container">
                 <div class="row justify-content-center">
@@ -941,92 +943,37 @@
                     </div>
                 </div>
                 <div class="row mt-n1-9">
-                    @foreach ( $questionpapers as $question)
+                    <?php $__currentLoopData = $questionpapers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $question): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-6 col-lg-4 col-xl-3 mt-1-9">
                             <div class="category-item-01 shadow " style="height:200px">
-                                <a href="{{ url('/'.$question->pdf_path) }}" class="d-block text-decoration-none" target="_blank">
+                                <a href="<?php echo e(url('/'.$question->pdf_path)); ?>" class="d-block text-decoration-none" target="_blank">
                                     <div class="category-img text-center">
-                                        <img src="{{asset('/assets/front/img/logos/pd.png')}}" alt="PDF Icon" height="80" width="80">
+                                        <img src="<?php echo e(asset('/assets/front/img/logos/pd.png')); ?>" alt="PDF Icon" height="80" width="80">
                                     </div>
                                     <div class="ms-3 text-center">
-                                        <h4 class="mb-0 evaluate">{{ $question->paper_name }}</h4>
+                                        <h4 class="mb-0 evaluate"><?php echo e($question->paper_name); ?></h4>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
-                        <a href="{{url('pyq')}}" style="color:#2c316f">
+                        <a href="<?php echo e(url('pyq')); ?>" style="color:#2c316f">
                             <b>View More</b> <i class="fas fa-arrow-right"></i> 
                         </a>
                 </div>
             </div>
         </section>
-    @endif
+    <?php endif; ?>
 
      
-    {{-- <section>
-        <div class="container">
-            <div class="section-heading">
-                <h2 class="h1 mb-0">Connect to Us</h2>
-            </div>
-            <div class="row justify-content-center g-3"> 
-                
     
-                <div class="col-auto d-flex align-items-center mx-4">
-                    <a href="mailto:{{$settingsData->email}}" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="icon-box  text-white">
-                            <i class="fas fa-envelope fa-2x"></i>
-                        </div>
-                        <span class="ms-3 fw-bold">{{$settingsData->email}}</span>
-                    </a>
-                </div>
-
-                
-    
-                <div class="col-auto d-flex align-items-center mx-4">
-                    <a href="tel:+{{$settingsData->mobile}}" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="icon-box  text-white">
-                            <i class="fas fa-phone fa-2x"></i>
-                        </div>
-                        <span class="ms-3 fw-bold">{{$settingsData->mobile}}</span>
-                    </a>
-                </div>
-                <div class="col-auto d-flex align-items-center mx-4">
-                    <a href="https://t.me/mppscmainsorbit" target="_blank" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="icon-box  text-white">
-                            <i class="fab fa-telegram fa-2x"></i>
-                        </div>
-                        <span class="ms-3 fw-bold">Telegram</span>
-                    </a>
-                </div>
-    
-                <div class="col-auto d-flex align-items-center mx-4">
-                    <a href="https://wa.me/{{$settingsData->whatsapp}}" target="_blank" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="icon-box  text-white">
-                            <i class="fab fa-whatsapp fa-2x"></i>
-                        </div>
-                        <span class="ms-3 fw-bold">WhatsApp</span>
-                    </a>
-                </div>
-    
-                <div class="col-auto d-flex align-items-center mx-4">
-                    <a href="https://youtube.com/@mainsorbit?si=QjqS52vouecH6d0Q" target="_blank" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="icon-box  text-white">
-                            <i class="fab fa-youtube fa-2x"></i>
-                        </div>
-                        <span class="ms-3 fw-bold">YouTube</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section> --}}
 
     <section class="contact-form pb-0">
         <div class="container mb-2-9 mb-md-6 mb-lg-7">
             <div class="section-heading">
-                {{-- <span class="sub-title">OUR CONTACTS</span> --}}
+                
                 <h2 class="mb-9 display-16 display-sm-14 display-lg-10 font-weight-800 h1 mb-5">Connect to Us</h2>
                 <div class="heading-seperator"><span></span></div>
             </div>
@@ -1040,8 +987,9 @@
                             <h4>Email Here</h4>
                             <ul class="list-unstyled p-0 m-0">
                                 <li>
-                                    <a href="mailto:{{$settingsData->email}}" style="color: rgb(9 67 109 / 87%);font-size: 20px">
-                                        {{$settingsData->email}}
+                                    <a href="mailto:<?php echo e($settingsData->email); ?>" style="color: rgb(9 67 109 / 87%);font-size: 20px">
+                                        <?php echo e($settingsData->email); ?>
+
                                     </a>
                                 </li>
                             </ul>
@@ -1058,8 +1006,9 @@
                             <h4>Call Here</h4>
                             <ul class="list-unstyled p-0 m-0">
                                 <li>
-                                    <a href="tel:+91{{$settingsData->mobile}}" style="color: rgb(9 67 109 / 87%);font-size: 20px">
-                                        +91{{$settingsData->mobile}}
+                                    <a href="tel:+91<?php echo e($settingsData->mobile); ?>" style="color: rgb(9 67 109 / 87%);font-size: 20px">
+                                        +91<?php echo e($settingsData->mobile); ?>
+
                                     </a>
                                 </li>
                             </ul>
@@ -1068,20 +1017,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row justify-content-center mb-5">
-            <div class="d-flex justify-content-center gap-4 flex-wrap">
-                <div class="d-flex flex-column align-items-center">
-                    <a href="https://wa.me/{{$settingsData->whatsapp}}" target="_blank"> <!-- WhatsApp link -->
-                        <img src="{{ asset('/assets/front/img/logos/whatsapp.png') }}" alt="WhatsApp" height="70" width="70">
-                    </a>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                    <a href="https://youtube.com/@mainsorbit?si=QjqS52vouecH6d0Q" target="_blank"> <!-- YouTube link -->
-                        <img src="{{ asset('/assets/front/img/logos/youtybe.png') }}" alt="YouTube" height="80" width="80">
-                    </a>
-                </div>
-            </div>
-        </div> --}}
+        
     </section>
 
         
@@ -1105,7 +1041,7 @@
                     let formData = $(this).serialize(); 
 
                     $.ajax({
-                        url: "{{ route('purchase.plan') }}",
+                        url: "<?php echo e(route('purchase.plan')); ?>",
                         type: "POST",
                         data: formData,
                         success: function(response) {
@@ -1131,10 +1067,10 @@
                 });
                 if (isLoggedIn == "1") {
                     $.ajax({
-                        url: "{{ route('check.active.plan') }}",
+                        url: "<?php echo e(route('check.active.plan')); ?>",
                         type: "POST",
                         data: {
-                            _token: "{{ csrf_token() }}",
+                            _token: "<?php echo e(csrf_token()); ?>",
                             plan_id: planId 
                         },
                         success: function(response) {
@@ -1153,10 +1089,10 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         $.ajax({
-                                            url: "{{ route('expire.active.plan') }}",
+                                            url: "<?php echo e(route('expire.active.plan')); ?>",
                                             type: "POST",
                                             data: {
-                                                _token: "{{ csrf_token() }}"
+                                                _token: "<?php echo e(csrf_token()); ?>"
                                             },
                                             success: function(expired){
                                                 Swal.fire("Expired!", expired.message, "success");
@@ -1195,4 +1131,6 @@
         });
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('front.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/cghome.blade.php ENDPATH**/ ?>
