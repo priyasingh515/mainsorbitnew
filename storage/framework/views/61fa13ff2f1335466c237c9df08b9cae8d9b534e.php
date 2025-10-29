@@ -21,7 +21,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4"style="position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 999;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{asset('/assets/admin/img/mainsorbit.png')}}" alt=" Logo" class="brand-image elevation-3">
+        <img src="<?php echo e(asset('/assets/admin/img/mainsorbit.png')); ?>" alt=" Logo" class="brand-image elevation-3">
         <span class="brand-text font-weight-light">Mains Orbit</span>
     </a>
     <!-- Sidebar -->
@@ -32,46 +32,41 @@
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{route('admin.dashboard')}}" class="nav-link">
+                    <a href="<?php echo e(route('admin.dashboard')); ?>" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>																
                 </li>
                
-                @php
+                <?php
                     $user = Auth::guard('admin')->user();
-                @endphp
+                ?>
 
-                @if ($user && $user->role == 3) 
+                <?php if($user && $user->role == 3): ?> 
                     <li class="nav-item">
-                        <a href="{{route('studentassign.list')}}" class="nav-link">
+                        <a href="<?php echo e(route('studentassign.list')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Assigned Answer</p>
                         </a>																
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('studentAssign.list')}}" class="nav-link">
+                        <a href="<?php echo e(route('studentAssign.list')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Evaluated Answer</p>
                         </a>															
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('studentdoubt.list')}}" class="nav-link">
+                        <a href="<?php echo e(route('studentdoubt.list')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Doubt Messages</p>
                         </a>																
                     </li>
-                @endif
+                <?php endif; ?>
 
-                @if ($user && $user->role != 3) 
-                    {{-- <li class="nav-item">
-                        <a href="{{route('evaluate.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Evaluate</p>
-                        </a>
-                    </li> --}}
+                <?php if($user && $user->role != 3): ?> 
+                    
                     <li class="nav-item has-treeview">
-                        <a href="{{route('evaluate.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('evaluate.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>
                                 Evaluator
@@ -82,36 +77,21 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{route('enquerylist.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('enquerylist.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Enquiry List</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('admin.doubt.students')}}" class="nav-link">
+                        <a href="<?php echo e(route('admin.doubt.students')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Student Doubt</p>
                         </a>
                     </li>
 
-                    {{-- <li class="nav-item">
-                        <a href="{{route('plan.pending')}}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Pending Plan List</p>
-                        </a>
-                    </li> --}}
-                    {{-- <li class="nav-item">
-                        <a href="{{route('plan.purchase')}}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Plan Purchase student</p>
-                        </a>
-                    </li> --}}
-                    {{-- <li class="nav-item">
-                        <a href="{{route('plan.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-tag"></i>
-                            <p>Plans</p>
-                        </a>
-                    </li> --}}
+                    
+                    
+                    
 
                     <li class="nav-item has-treeview">
                         <a href="" class="nav-link">
@@ -122,20 +102,20 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('plan.index')}}" class="nav-link">
+                                <a href="<?php echo e(route('plan.index')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Plan List</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('plan.purchase')}}" class="nav-link">
+                                <a href="<?php echo e(route('plan.purchase')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Plan Purchase Student</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('plan.pending')}}" class="nav-link">
+                                <a href="<?php echo e(route('plan.pending')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Plan Pending Student</p>
                                 </a>
@@ -145,83 +125,33 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a href="{{route('student.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('student.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p> CG Student
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                
                             </p>
                         </a>
 
-                        {{-- <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Student</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Question</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Weekly Test</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Plan</p>
-                                </a>
-                            </li>
-                        </ul> --}}
+                        
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('student.mpstudentList')}}" class="nav-link">
+                        <a href="<?php echo e(route('student.mpstudentList')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p> MP Student
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                
                             </p>
                         </a>
-                        {{-- <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Student</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Question</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Weekly Test</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Plan</p>
-                                </a>
-                            </li>
-                        </ul> --}}
+                        
                     </li>
                     
                     <li class="nav-item">
-                        <a href="{{route('slider.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('slider.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Slider</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('about.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('about.index')); ?>" class="nav-link">
                             <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -230,7 +160,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a href="{{route('sample.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('sample.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Add Sample</p>
                         </a>
@@ -244,13 +174,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('mpmainspractice.index')}}" class="nav-link">
+                                <a href="<?php echo e(route('mpmainspractice.index')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>MP Mains Question</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('cgmainspractice.index')}}" class="nav-link">
+                                <a href="<?php echo e(route('cgmainspractice.index')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>CG Mains Question</p>
                                 </a>
@@ -260,7 +190,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{route('weekly.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('weekly.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Monthly Current affairs</p>
                         </a>
@@ -274,13 +204,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('mpquestion.index')}}" class="nav-link">
+                                <a href="<?php echo e(route('mpquestion.index')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>MP PYQ</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('cgquestion.index')}}" class="nav-link">
+                                <a href="<?php echo e(route('cgquestion.index')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>CG PYQ</p>
                                 </a>
@@ -289,19 +219,19 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('guide.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('guide.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Supporter</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('offer.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('offer.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Offers</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('setting.index')}}" class="nav-link">
+                        <a href="<?php echo e(route('setting.index')); ?>" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Web Settings</p>
                         </a>
@@ -316,20 +246,20 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('cglogin.student')}}" class="nav-link">
+                                <a href="<?php echo e(route('cglogin.student')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>CG Student</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('mplogin.student')}}" class="nav-link">
+                                <a href="<?php echo e(route('mplogin.student')); ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>MP Student</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                @endif
+                <?php endif; ?>
                 
                 							
             </ul>
@@ -337,4 +267,4 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
- </aside>
+ </aside><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/admin/layouts/sidebar.blade.php ENDPATH**/ ?>
