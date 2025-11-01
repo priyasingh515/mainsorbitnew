@@ -46,7 +46,7 @@ class StudentController extends Controller
             ->groupBy('users.id', 'users.name', 'users.email')
             ->orderBy('users.id', 'desc') 
             ->get();
-        
+            // dd($student);
         return view('admin.student.mpstudent_list',compact('student'));
     }
 

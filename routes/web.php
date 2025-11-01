@@ -210,6 +210,7 @@ Route::get('/get-subjects/{paperId}', [FrontController::class, 'getSubjects']);
 Route::get('/answerList', [FrontController::class, 'allanswer']);
 Route::post('/purchase-plan', [FrontController::class, 'purchase'])->name('purchase.plan');
 Route::get('/dashboard', [FrontController::class, 'userdash'])->name('dashboard');
+Route::get('/profile', [FrontController::class, 'profile'])->name('profile');
 Route::get('/current_affair', [FrontController::class, 'currentAffair']);
 Route::post('/save-user', [FrontController::class, 'signin']);
 Route::get('/pendingAnsList', [FrontController::class, 'pendingAns']);

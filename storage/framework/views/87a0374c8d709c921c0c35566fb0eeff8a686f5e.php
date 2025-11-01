@@ -1,6 +1,6 @@
-@extends('front.layouts.master')
-@section('title', 'User Dashboard')
-@section('content')
+
+<?php $__env->startSection('title', 'User Dashboard'); ?>
+<?php $__env->startSection('content'); ?>
 
 
     <style>
@@ -61,85 +61,55 @@
         <div class="row">
             <!-- Sidebar -->
             <nav class="col-md-3 col-lg-3 sidebar d-none d-md-block">
-                @if(Auth::user()->name)
-                    <h4 style="font-size: 12px">Name: {{ Auth::user()->name }}</h4>
-                @else
-                    <h4 style="font-size: 12px">Email: {{ Auth::user()->email }}</h4>
-                @endif
-               
+                <?php if(Auth::user()->name): ?>
+                    <h4 style="font-size: 12px">Name: <?php echo e(Auth::user()->name); ?></h4>
+                <?php else: ?>
+                    <h4 style="font-size: 12px">Email: <?php echo e(Auth::user()->email); ?></h4>
+                <?php endif; ?>
+                <?php if($activePlan): ?>
+                    <div class="alert alert-info">
+                        <strong>Plan Details:</strong><br>
+                        <b>Plan Name:</b> <?php echo e($activePlan->name); ?><br>
+                        <b>Purchase Date:</b> <?php echo e(date('d M, Y', strtotime($activePlan->purchase_date))); ?><br>
+                        <b>Expiry Date:</b> <?php echo e(date('d M, Y', strtotime($activePlan->expiry_date))); ?>
+
+                    </div>
+                <?php endif; ?>
 
                 <ul class="list-group">
-                    {{-- <li class="list-group-item">
-                        <a href="{{route('user.count') }}" class="text-decoration-none">📊 Dashboard</a>
-                    </li> --}}
+                    
                     <li class="list-group-item">
-                        <a href="{{ route('user.answerForm') }}" class="text-decoration-none">📝 Submit Answer</a>
+                        <a href="<?php echo e(route('user.answerForm')); ?>" class="text-decoration-none">📝 Submit Answer</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{url('/answerList')}}" class="text-decoration-none">📂 My Answers</a>
+                        <a href="<?php echo e(url('/answerList')); ?>" class="text-decoration-none">📂 My Answers</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ route('user.msg') }}" class="text-decoration-none">💬 Doubt Messages</a>
+                        <a href="<?php echo e(route('user.msg')); ?>" class="text-decoration-none">💬 Doubt Messages</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ route('user.count') }}" class="text-decoration-none">📊 Your Report</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('profile') }}" class="text-decoration-none">👤 My Profile</a>
-                    </li>
-                    @if(auth()->check() && $hasPlan)
-                        <li class="list-group-item">
-                            <a href="{{url('current_affair')}}" class="text-decoration-none">📰 Monthly Current Affairs</a>
+                            <a href="<?php echo e(route('user.count')); ?>" class="text-decoration-none">📊 Your Report</a>
                         </li>
-                    @endif
+                    <?php if(auth()->check() && $hasPlan): ?>
+                        <li class="list-group-item">
+                            <a href="<?php echo e(url('current_affair')); ?>" class="text-decoration-none">📰 Monthly Current Affairs</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
 
 
             <main class="col-md-9 col-lg-9 d-flex flex-column">
 
-                {{-- <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="">
-                                <div class="card shadow" style="height: 100px">
-                                    <div class="card-body text-center">
-                                        <h5 class="mt-2">Total Submitted Answers</h5>
-                                        <h3>{{ $totalSubmitted }}</h3> <!-- ✅ Count Display -->
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="">
-                                <div class="card shadow" style="height: 100px">
-                                    <div class="card-body text-center">
-                                        <h5 class="mt-2">Total Evaluated Answers</h5>
-                                        <h3>{{ $totalEvaluated }}</h3> <!-- ✅ Count Display -->
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="">
-                                <div class="card shadow" style="height: 100px">
-                                    <div class="card-body text-center">
-                                        <h5 class="mt-2">Total Pending Answers</h5>
-                                        <h3>{{ $totalPending }}</h3> <!-- ✅ Count Display -->
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div> --}}
+                
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="{{url('answerList')}}" class="text-decoration-none">
+                            <a href="<?php echo e(url('answerList')); ?>" class="text-decoration-none">
                                 <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-2">
                                     <div class="card-body">
                                         <h6 class="text-muted text-uppercase fw-light">Total Submitted Answers</h6>
-                                        <h2 class="fw-bold text-primary">{{ $totalSubmitted }}</h2>
+                                        <h2 class="fw-bold text-primary"><?php echo e($totalSubmitted); ?></h2>
                                         <!-- 🔵 Count Focused -->
                                     </div>
                                 </div>
@@ -147,11 +117,11 @@
                         </div>
 
                         <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="{{url('CheckAnsList')}}" class="text-decoration-none">
+                            <a href="<?php echo e(url('CheckAnsList')); ?>" class="text-decoration-none">
                                 <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-2">
                                     <div class="card-body">
                                         <h6 class="text-muted text-uppercase fw-light">Total Evaluated Answers</h6>
-                                        <h2 class="fw-bold text-success">{{ $totalEvaluated }}</h2>
+                                        <h2 class="fw-bold text-success"><?php echo e($totalEvaluated); ?></h2>
                                         <!-- 🟢 Count Focused -->
                                     </div>
                                 </div>
@@ -159,11 +129,11 @@
                         </div>
 
                         <div class="col-md-6 col-lg-4 mb-4">
-                            <a href="{{url('pendingAnsList')}}" class="text-decoration-none">
+                            <a href="<?php echo e(url('pendingAnsList')); ?>" class="text-decoration-none">
                                 <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-2">
                                     <div class="card-body">
                                         <h6 class="text-muted text-uppercase fw-light">Total Pending Answers</h6>
-                                        <h2 class="fw-bold text-danger">{{ $totalPending }}</h2> <!-- 🔴 Count Focused -->
+                                        <h2 class="fw-bold text-danger"><?php echo e($totalPending); ?></h2> <!-- 🔴 Count Focused -->
                                     </div>
                                 </div>
                             </a>
@@ -213,4 +183,5 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('front.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/user/usercount.blade.php ENDPATH**/ ?>

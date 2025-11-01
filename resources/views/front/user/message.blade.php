@@ -102,6 +102,9 @@
                         <li class="list-group-item">
                             <a href="{{ route('user.count') }}" class="text-decoration-none">📊 Your Report</a>
                         </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('profile') }}" class="text-decoration-none">👤 My Profile</a>
+                        </li>
                         @if(auth()->check() && $hasPlan)
                             <li class="list-group-item">
                                 <a href="{{url('current_affair')}}" class="text-decoration-none">📰 Monthly Current Affairs</a>

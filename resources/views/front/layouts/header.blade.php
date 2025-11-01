@@ -599,8 +599,8 @@
                                             @endphp
                                             <li>
                                                 <a href="{{route('user.answerForm')}}">My Account <i class="fas fa-user me-1"></i></a>
-                                                <ul class="" >
-                                                    <li><a href="{{ route('user.count') }}">View Profile</a></li>
+                                                {{-- <ul class="" >
+                                                    <li><a href="{{ route('user.answerForm') }}">View Profile</a></li>
                                                     @if(Auth::check() && Auth::user()->name)
                                                         <li><a href="#!"><i class="fas fa-user me-1"></i> {{ Auth::user()->name }}</a></li>
                                                     @endif
@@ -608,11 +608,9 @@
                                                     @if(!empty($districtName))
                                                         <li><a href=""><i class="fas fa-map-marker-alt me-1"></i> {{ $districtName }}</a></li>
                                                     @endif
-                                                </ul>
+                                                </ul> --}}
                                             </li>
 
-                                            
-                                            
                                         @endif
                                         
                                     </ul>

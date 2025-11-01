@@ -1,6 +1,6 @@
-@extends('front.layouts.master')
-@section('title','User Dashboard')
-@section('content')
+
+<?php $__env->startSection('title','User Dashboard'); ?>
+<?php $__env->startSection('content'); ?>
 
 
 <style>
@@ -61,43 +61,34 @@
             <div class="row">
                 <!-- Sidebar -->
                 <nav class="col-md-3 col-lg-3 sidebar d-none d-md-block">
-                    @if(Auth::user()->name)
-                        <h4 style="font-size: 12px">Name: {{ Auth::user()->name }}</h4>
-                    @else
-                        <h4 style="font-size: 12px">Email: {{ Auth::user()->email }}</h4>
-                    @endif
-                    {{-- @if ($activePlan)
-                        <div class="alert alert-info">
-                            <strong>Plan Details:</strong><br>
-                            <b>Plan Name:</b> {{$activePlan->name}}<br>
-                            <b>Purchase Date:</b> {{ date('d M, Y', strtotime($activePlan->purchase_date)) }}<br>
-                            <b>Expiry Date:</b> {{ date('d M, Y', strtotime($activePlan->expiry_date)) }}
-                        </div>
-                    @endif --}}
+                    <?php if(Auth::user()->name): ?>
+                        <h4 style="font-size: 12px">Name: <?php echo e(Auth::user()->name); ?></h4>
+                    <?php else: ?>
+                        <h4 style="font-size: 12px">Email: <?php echo e(Auth::user()->email); ?></h4>
+                    <?php endif; ?>
+                    
                     <ul class="list-group">
-                        {{-- <li class="list-group-item">
-                            <a href="{{ route('user.count') }}" class="text-decoration-none">📊 Dashboard</a>
-                        </li> --}}
+                        
                         <li class="list-group-item">
-                            <a href="{{ route('user.answerForm') }}" class="text-decoration-none">📝 Submit Answer</a>
+                            <a href="<?php echo e(route('user.answerForm')); ?>" class="text-decoration-none">📝 Submit Answer</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{{url('/answerList')}}" class="text-decoration-none">📂 My Answers</a>
+                            <a href="<?php echo e(url('/answerList')); ?>" class="text-decoration-none">📂 My Answers</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{{ route('user.msg') }}" class="text-decoration-none">💬 Doubt Messages</a>
+                            <a href="<?php echo e(route('user.msg')); ?>" class="text-decoration-none">💬 Doubt Messages</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{{ route('user.count') }}" class="text-decoration-none">📊 Your Report</a>
+                            <a href="<?php echo e(route('user.count')); ?>" class="text-decoration-none">📊 Your Report</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{{ route('profile') }}" class="text-decoration-none">👤 My Profile</a>
+                            <a href="<?php echo e(route('profile')); ?>" class="text-decoration-none">👤 My Profile</a>
                         </li>
-                        @if(auth()->check() && $hasPlan)
+                        <?php if(auth()->check() && $hasPlan): ?>
                             <li class="list-group-item">
-                                <a href="{{url('current_affair')}}" class="text-decoration-none">📰 Monthly Current Affairs</a>
+                                <a href="<?php echo e(url('current_affair')); ?>" class="text-decoration-none">📰 Monthly Current Affairs</a>
                             </li>
-                        @endif
+                        <?php endif; ?>
                     </ul>
                 </nav>
         
@@ -108,17 +99,17 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h1 style="margin-left: 26px">Submit Answer</h1>
                         </div>
-                        <form action="{{ route('user.answerstore') }}" method="post" enctype="multipart/form-data">
-                            @csrf
+                        <form action="<?php echo e(route('user.answerstore')); ?>" method="post" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-lg-6 col-md-12">
                                     <div class="mb-3">
                                         <label for="paper_type">Paper Type</label>
                                         <select name="paper_type_id" id="paper_type" class="form-control" required>
                                             <option value="">Select Paper Type</option>
-                                            @foreach ($papers as $item)
-                                                <option value="{{ $item->id }}">{{ $item->paper_type_name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $papers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item->id); ?>"><?php echo e($item->paper_type_name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -132,9 +123,16 @@
                                     <div class="mb-3">
                                         <label class="form-label">Upload Answer Sheet</label>
                                         <input type="file" class="form-control" name="answer_sheet" required>
-                                        @error('answer_sheet')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                                        <?php $__errorArgs = ['answer_sheet'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                            <small class="text-danger"><?php echo e($message); ?></small>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
                             </div>
@@ -147,35 +145,10 @@
                     <div class="col-md-10 mt-5">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 style="margin-left: 26px">Submitted Answers</h5>
-                            <a href="{{url('/answerList')}}" class="btn btn-primary">View All</a>
+                            <a href="<?php echo e(url('/answerList')); ?>" class="btn btn-primary">View All</a>
                         </div>
                         
-                        {{-- <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Paper Type</th>
-                                    <th>Subject</th>
-                                    <th>Answer Sheet</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($answers as $key => $answer)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $answer->paper_type_name ?? 'N/A' }}</td>
-                                        <td>{{ $answer->subject_name ?? 'N/A' }}</td>
-                                        <td>
-                                            <a href="{{ asset($answer->answer_pdf) }}" target="_blank">
-                                                View Answer Sheet
-                                            </a>
-                                        </td>
-                                        <td>{{ ucfirst($answer->status) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table> --}}
+                        
 
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -189,27 +162,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($answers as $key => $answer)
+                                    <?php $__currentLoopData = $answers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $answer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $answer->paper_type_name ?? 'N/A' }}</td>
-                                            <td>{{ $answer->question_no ?? 'N/A' }}</td>
+                                            <td><?php echo e($key + 1); ?></td>
+                                            <td><?php echo e($answer->paper_type_name ?? 'N/A'); ?></td>
+                                            <td><?php echo e($answer->question_no ?? 'N/A'); ?></td>
                                             <td>
-                                                <a href="{{ asset('public/'.$answer->answer_pdf) }}" target="_blank">
+                                                <a href="<?php echo e(asset('public/'.$answer->answer_pdf)); ?>" target="_blank">
                                                     View Answer Sheet
                                                 </a>
                                             </td>
-                                            {{-- <td>{{ ucfirst($answer->status) }}</td> --}}
+                                            
                                             <td>
                                                 <span class="badge 
-                                                    @if($answer->status === 'checked') bg-success 
-                                                    @elseif($answer->status === 'pending' || $answer->status === 'assigned') bg-danger 
-                                                    @endif">
-                                                    {{ $answer->status === 'assigned' ? 'Pending' : ucfirst($answer->status) }}
+                                                    <?php if($answer->status === 'checked'): ?> bg-success 
+                                                    <?php elseif($answer->status === 'pending' || $answer->status === 'assigned'): ?> bg-danger 
+                                                    <?php endif; ?>">
+                                                    <?php echo e($answer->status === 'assigned' ? 'Pending' : ucfirst($answer->status)); ?>
+
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -254,4 +228,5 @@
                 element.style.display = 'none';
             }, 1000); 
         </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('front.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/user/anseraddform.blade.php ENDPATH**/ ?>

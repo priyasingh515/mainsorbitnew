@@ -4,7 +4,7 @@
 
 
 <style>
-        .sidebar {
+    .sidebar {
             background: #ebebeb57;
             color: white;
             padding: 20px;
@@ -55,6 +55,8 @@
 </style>
 
 
+
+
         <div class="container-fluid">
             <div class="row">
                 <!-- Sidebar -->
@@ -64,15 +66,18 @@
                     @else
                         <h4 style="font-size: 12px">Email: {{ Auth::user()->email }}</h4>
                     @endif
-                    {{-- @if ($activePlan)
+                    @if ($activePlan)
                         <div class="alert alert-info">
                             <strong>Plan Details:</strong><br>
+                            <b>Plan Name:</b> {{$activePlan->name}}<br>
                             <b>Purchase Date:</b> {{ date('d M, Y', strtotime($activePlan->purchase_date)) }}<br>
                             <b>Expiry Date:</b> {{ date('d M, Y', strtotime($activePlan->expiry_date)) }}
                         </div>
-                    @endif --}}
+                    @endif
                     <ul class="list-group">
-                        
+                        {{-- <li class="list-group-item">
+                            <a href="{{ route('user.count') }}" class="text-decoration-none">📊 Dashboard</a>
+                        </li> --}}
                         <li class="list-group-item">
                             <a href="{{ route('user.answerForm') }}" class="text-decoration-none">📝 Submit Answer</a>
                         </li>
@@ -96,47 +101,69 @@
                     </ul>
                 </nav>
         
-              
-                <main class="col-md-9 col-lg-9 d-flex flex-column">
-                   
-                    <div class="container-fluid py-5">
-                        <div class="row justify-content-center p-3">
-                            <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
-                                <a href="{{ route('user.answerForm') }}" class="text-decoration-none">
-                                    <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-4">
-                                        <div class="card-body">
-                                            <h6 class="text-muted text-uppercase fw-light">Submit New Answer</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                    
-                            <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
-                                <a href="{{ url('/answerList') }}" class="text-decoration-none">
-                                    <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-4">
-                                        <div class="card-body">
-                                            <h6 class="text-muted text-uppercase fw-light">Evaluated Answer</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                    
-                            @if(auth()->check() && $hasPlan)
-                            <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
-                                <a href="{{ url('current_affair') }}" class="text-decoration-none">
-                                    <div class="card shadow-lg border border-warning rounded-3 bg-light text-center py-4">
-                                        <div class="card-body">
-                                            <h6 class="text-muted text-uppercase fw-light">Monthly Current Affairs</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            @endif
+                <main class="col-md-9 col-lg-9 justify-content-center align-items-center">
+
+                    <div class="col-md-10 mt-5 col-lg-12">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1 class="ms-4">Profile Details</h1>
                         </div>
+
+                        {{-- User Info Card --}}
+                        <div class="card shadow-sm border-0 rounded-3 mx-4 mb-4">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted mb-1"><i class="fas fa-user me-1"></i> Name</h6>
+                                        <p class="fs-5 fw-semibold">{{ Auth::user()->name ?? 'Demo'}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted mb-1"><i class="fas fa-envelope me-1"></i> Email</h6>
+                                        <p class="fs-5 fw-semibold">{{ Auth::user()->email ?? 'Demo'}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted mb-1"><i class="fas fa-phone me-1"></i> Phone</h6>
+                                        <p class="fs-5 fw-semibold">{{ Auth::user()->phone ?? 'Demo'}}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted mb-1"><i class="fas fa-map-marker-alt me-1"></i> State</h6>
+                                        <p class="fs-5 fw-semibold">{{ $districtName ?? 'Demo'}}</p>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="text-end">
+                                    <a href="{{ route('profile.edit', $user->id ?? '') }}" class="btn btn-primary rounded-pill px-4">
+                                        Edit Profile
+                                    </a>
+                                </div> --}}
+                            </div>
+                        </div>
+
+                        {{-- Plan Details --}}
+                        @if ($activePlan)
+                            <div class="card shadow-sm border-0 rounded-3 mx-4 bg-light">
+                                <div class="card-body">
+                                    <h5 class="mb-3"><i class="bi bi-card-checklist me-2"></i> Active Plan Details</h5>
+                                    <p class="mb-1"><strong>Plan Name:</strong> {{ $activePlan->name }}</p>
+                                    <p class="mb-1"><strong>Purchase Date:</strong> {{ date('d M, Y', strtotime($activePlan->purchase_date)) }}</p>
+                                    <p class="mb-1"><strong>Expiry Date:</strong> {{ date('d M, Y', strtotime($activePlan->expiry_date)) }}</p>
+                                </div>
+                            </div>
+                        @else
+                            <div class="alert alert-warning mx-4">
+                                You don't have any active plan currently.
+                            </div>
+                        @endif
+
                     </div>
+
                 </main>
             </div>
         </div>
+
+        
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -170,5 +197,4 @@
                 element.style.display = 'none';
             }, 1000); 
         </script>
-
 @endsection

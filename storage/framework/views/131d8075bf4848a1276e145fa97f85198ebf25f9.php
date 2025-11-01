@@ -589,20 +589,9 @@
                                             ?>
                                             <li>
                                                 <a href="<?php echo e(route('user.answerForm')); ?>">My Account <i class="fas fa-user me-1"></i></a>
-                                                <ul class="" >
-                                                    <li><a href="<?php echo e(route('user.count')); ?>">View Profile</a></li>
-                                                    <?php if(Auth::check() && Auth::user()->name): ?>
-                                                        <li><a href="#!"><i class="fas fa-user me-1"></i> <?php echo e(Auth::user()->name); ?></a></li>
-                                                    <?php endif; ?>
-                                                    <li><a href=""><i class="fas fa-envelope me-1"></i> <?php echo e(Auth::user()->email); ?></a></li>
-                                                    <?php if(!empty($districtName)): ?>
-                                                        <li><a href=""><i class="fas fa-map-marker-alt me-1"></i> <?php echo e($districtName); ?></a></li>
-                                                    <?php endif; ?>
-                                                </ul>
+                                                
                                             </li>
 
-                                            
-                                            
                                         <?php endif; ?>
                                         
                                     </ul>

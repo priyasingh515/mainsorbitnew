@@ -28,7 +28,9 @@ class SampleController extends Controller
 
         if ($request->hasFile('sample_file')) {
             $file = $request->file('sample_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            // $fileName = time() . '_' . $file->getClientOriginalName();
+            $fileName = time() . '_' . preg_replace('/[^A-Za-z0-9\.\-_]/', '_', $file->getClientOriginalName());
+
             $destinationPath = public_path('admin/sample');
             $file->move($destinationPath, $fileName);
         } else {

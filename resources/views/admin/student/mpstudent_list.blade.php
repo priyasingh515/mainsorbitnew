@@ -43,7 +43,7 @@
                             <td>{{$students->name ?? 'Demo'}}</td>
                             <td>
                                 @php 
-                                                             $plan = DB::table('user_plans')
+                                     $plan = DB::table('user_plans')
                                     ->Join('plans', 'user_plans.plan_id', '=', 'plans.id')
                                     ->select(
                                         'plans.id',
