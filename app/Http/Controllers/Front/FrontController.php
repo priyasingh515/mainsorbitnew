@@ -515,7 +515,7 @@ class FrontController extends Controller
     public function signin(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            // 'name' => 'required|string',
             'email' => 'required|email',
             'state' => 'nullable|string'
         ]);
@@ -535,7 +535,7 @@ class FrontController extends Controller
             if (!$user) {
                 // User create karein agar exist nahi karta
                 $user = User::create([
-                    'name' => $request->name,
+                    // 'name' => $request->name,
                     'email' => $request->email,
                     'state' => $state
                 ]);
@@ -777,23 +777,27 @@ class FrontController extends Controller
     public function purchase(Request $request)
     {
         $user = Auth::user();
+
+        // 🔒 1. User check
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'Please log in first!'], 401);
         }
 
-        $plan = DB::table('plans')->where('id', $request->plan_id)->first();
-        if (!$plan) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid Plan!'], 400);
-        }
-
-        // ✅ Validate Form Data
+        // 🔍 2. Validate input fields
         $request->validate([
+            'plan_id' => 'required|exists:plans,id',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15',
             'district' => 'required|string|max:255',
         ]);
 
-        // ✅ Step 1: Update User Table
+        // 🧾 3. Fetch selected plan
+        $plan = DB::table('plans')->where('id', $request->plan_id)->first();
+        if (!$plan) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid Plan!'], 400);
+        }
+
+        // 🧍 4. Update user details
         DB::table('users')->where('id', $user->id)->update([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -801,7 +805,45 @@ class FrontController extends Controller
             'updated_at' => now(),
         ]);
 
-        // ✅ Step 2: Store Plan Purchase Details
+        // ⏳ 5. Check if user already has a pending plan
+        $existing = DB::table('user_plans')
+            ->where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->first();
+
+        // 💡 6. If user has a pending plan
+        if ($existing) {
+            // Same plan → Just redirect
+            if ($existing->plan_id == $request->plan_id) {
+                return response()->json([
+                    'status' => 'pending',
+                    'message' => 'You already have a pending plan request for this plan. Please complete payment first.',
+                    'redirect_url' => route('plan.payment', ['id' => $existing->id])
+                ]);
+            }
+
+            // Different plan → Update the existing pending record
+            $validityDays = intval(preg_replace('/[^0-9]/', '', $plan->plan_validity));
+            $purchaseDate = now();
+            $expiryDate = $purchaseDate->copy()->addDays($validityDays);
+
+            DB::table('user_plans')
+                ->where('id', $existing->id)
+                ->update([
+                    'plan_id' => $plan->id,
+                    'purchase_date' => $purchaseDate,
+                    'expiry_date' => $expiryDate,
+                    'updated_at' => now(),
+                ]);
+
+            return response()->json([
+                'status' => 'updated',
+                'message' => 'Your pending plan has been updated to the new plan. Redirecting to payment...',
+                'redirect_url' => route('plan.payment', ['id' => $existing->id])
+            ]);
+        }
+
+        // 🆕 7. If no pending plan → create new entry
         $validityDays = intval(preg_replace('/[^0-9]/', '', $plan->plan_validity));
         $purchaseDate = now();
         $expiryDate = $purchaseDate->copy()->addDays($validityDays);
@@ -817,7 +859,7 @@ class FrontController extends Controller
             'updated_at' => now(),
         ]);
 
-        // ✅ Step 3: Redirect to Payment Page with Purchase ID
+        // ✅ 8. Success response
         return response()->json([
             'status' => 'success',
             'message' => 'Plan Purchased Successfully! Redirecting to payment...',

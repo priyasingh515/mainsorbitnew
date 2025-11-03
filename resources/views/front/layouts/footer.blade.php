@@ -371,106 +371,106 @@
          });
     </script> --}}
 
-        {{-- <script>
-            function checkLogin(planId) {
+    {{-- <script>
+        function checkLogin(planId) {
 
-                let isLoggedIn = $("#auth_user").val(); 
-         
-                 if (isLoggedIn == "1") {
-                     $("#plan_id").val(planId);
-                 } else {
-                     alert("Please log in to purchase a plan.");
-                     $("#loginModal").modal("show");
-                 }
-                
-
-               $("#purchasePlanForm").submit(function(e) {
-                    e.preventDefault();
-                    let formData = $(this).serialize(); 
-
-                    $.ajax({
-                        url: "{{ route('purchase.plan') }}",
-                        type: "POST",
-                        data: formData,
-                        success: function(response) {
-                            Swal.fire("Success", response.message, "success");
-                            $("#purchasePlanModal").modal("hide");
-
-                            if (response.redirect_url) {
-                                setTimeout(() => {
-                                    window.location.href = response.redirect_url;
-                                }, 1000);
-                            }
-                        },
-                        error: function(xhr) {
-                            let res = xhr.responseJSON;
-                            if (res && res.errors) {
-                                let messages = Object.values(res.errors).flat().join('<br>');
-                                Swal.fire("Validation Error", messages, "error");
-                            } else {
-                                Swal.fire("Error", res.message || "Something went wrong.", "error");
-                            }
-                        }
-                    });
-                });
+            let isLoggedIn = $("#auth_user").val(); 
+        
                 if (isLoggedIn == "1") {
-                    $.ajax({
-                        url: "{{ route('check.active.plan') }}",
-                        type: "POST",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            plan_id: planId 
-                        },
-                        success: function(response) {
-                            if (response.status === "ok") {
-                                $("#plan_id").val(planId);
-                                $("#purchasePlanModal").modal("show");
-                            } 
-                            else if (response.status === "exists") {
-                                Swal.fire({
-                                    title: "Plan",
-                                    text: response.message,
-                                    icon: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonText: "Yes, expire old plan",
-                                    cancelButtonText: "Cancel"
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $.ajax({
-                                            url: "{{ route('expire.active.plan') }}",
-                                            type: "POST",
-                                            data: {
-                                                _token: "{{ csrf_token() }}"
-                                            },
-                                            success: function(expired){
-                                                Swal.fire("Expired!", expired.message, "success");
-                                                setTimeout(() => {
-                                                    $("#plan_id").val(planId);
-                                                    $("#purchasePlanModal").modal("show");
-                                                }, 300);
-                                            },
-                                            error: function(xhr) {
-                                                Swal.fire("Error", "Failed to expire current plan.", "error");
-                                            }
-                                        });
-                                    }
-                                });
-                            } 
-                            else if (response.status === "higher_or_equal") {
-                                Swal.fire("Not Allowed", response.message, "info");
-                            }
-                        },
-                        error: function() {
-                            Swal.fire("Error", "Error checking active plan.", "error");
-                        }
-                    });
+                    $("#plan_id").val(planId);
                 } else {
-                    Swal.fire("Login Required", "Please log in to purchase a plan.", "info");
+                    alert("Please log in to purchase a plan.");
                     $("#loginModal").modal("show");
                 }
-            }
+            
 
-        </script> --}}
+            $("#purchasePlanForm").submit(function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize(); 
+
+                $.ajax({
+                    url: "{{ route('purchase.plan') }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+                        Swal.fire("Success", response.message, "success");
+                        $("#purchasePlanModal").modal("hide");
+
+                        if (response.redirect_url) {
+                            setTimeout(() => {
+                                window.location.href = response.redirect_url;
+                            }, 1000);
+                        }
+                    },
+                    error: function(xhr) {
+                        let res = xhr.responseJSON;
+                        if (res && res.errors) {
+                            let messages = Object.values(res.errors).flat().join('<br>');
+                            Swal.fire("Validation Error", messages, "error");
+                        } else {
+                            Swal.fire("Error", res.message || "Something went wrong.", "error");
+                        }
+                    }
+                });
+            });
+            if (isLoggedIn == "1") {
+                $.ajax({
+                    url: "{{ route('check.active.plan') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        plan_id: planId 
+                    },
+                    success: function(response) {
+                        if (response.status === "ok") {
+                            $("#plan_id").val(planId);
+                            $("#purchasePlanModal").modal("show");
+                        } 
+                        else if (response.status === "exists") {
+                            Swal.fire({
+                                title: "Plan",
+                                text: response.message,
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "Yes, expire old plan",
+                                cancelButtonText: "Cancel"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: "{{ route('expire.active.plan') }}",
+                                        type: "POST",
+                                        data: {
+                                            _token: "{{ csrf_token() }}"
+                                        },
+                                        success: function(expired){
+                                            Swal.fire("Expired!", expired.message, "success");
+                                            setTimeout(() => {
+                                                $("#plan_id").val(planId);
+                                                $("#purchasePlanModal").modal("show");
+                                            }, 300);
+                                        },
+                                        error: function(xhr) {
+                                            Swal.fire("Error", "Failed to expire current plan.", "error");
+                                        }
+                                    });
+                                }
+                            });
+                        } 
+                        else if (response.status === "higher_or_equal") {
+                            Swal.fire("Not Allowed", response.message, "info");
+                        }
+                    },
+                    error: function() {
+                        Swal.fire("Error", "Error checking active plan.", "error");
+                    }
+                });
+            } else {
+                Swal.fire("Login Required", "Please log in to purchase a plan.", "info");
+                $("#loginModal").modal("show");
+            }
+        }
+
+    </script> --}}
 
 <script type="module">
     // ✅ Firebase SDK Import Karein
@@ -510,15 +510,15 @@
                             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || ""
                         },
                         body: JSON.stringify({
-                            name: user.displayName,
+                            // name: user.displayName,
                             email: user.email,
-                            state: selectedState  // ✅ State bhi send karna hai
+                            state: selectedState  
                         })
                     })
                     .then(response => response.json())
                     .then(data => {
                         console.log("User Saved:", data);
-                        window.location.href = 'https://mainsorbit.com/userCount';
+                        window.location.href = 'https://mainsorbit.com/answerForm';
                     })
                     .catch(error => console.error("Fetch Error:", error));
                 })

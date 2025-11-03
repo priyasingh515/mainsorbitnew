@@ -82,8 +82,6 @@
             </div>
         </section>
 
-       
-
         {{-- <script>
             function checkLogin(planId) {
                 @auth
@@ -123,7 +121,8 @@
                 });
             }
         </script> --}}
-<script>
+
+        <script>
             function checkLogin1(planId) {
 
                 let isLoggedIn = $("#auth_user").val(); 
@@ -136,35 +135,121 @@
                  }
                 
 
-               $("#purchasePlanForm").submit(function(e) {
-                    e.preventDefault();
-                    let formData = $(this).serialize(); 
+            //    $("#purchasePlanForm").submit(function(e) {
+            //         e.preventDefault();
+            //         let formData = $(this).serialize(); 
 
-                    $.ajax({
-                        url: "{{ route('purchase.plan') }}",
-                        type: "POST",
-                        data: formData,
-                        success: function(response) {
-                            Swal.fire("Success", response.message, "success");
+            //         $.ajax({
+            //             url: "{{ route('purchase.plan') }}",
+            //             type: "POST",
+            //             data: formData,
+            //             success: function(response) {
+            //                 Swal.fire("Success", response.message, "success");
+            //                 $("#purchasePlanModal").modal("hide");
+
+            //                 if (response.redirect_url) {
+            //                     setTimeout(() => {
+            //                         window.location.href = response.redirect_url;
+            //                     }, 1000);
+            //                 }
+            //             },
+            //             error: function(xhr) {
+            //                 let res = xhr.responseJSON;
+            //                 if (res && res.errors) {
+            //                     let messages = Object.values(res.errors).flat().join('<br>');
+            //                     Swal.fire("Validation Error", messages, "error");
+            //                 } else {
+            //                     Swal.fire("Error", res.message || "Something went wrong.", "error");
+            //                 }
+            //             }
+            //         });
+            //     });
+
+            $("#purchasePlanForm").submit(function(e) {
+                e.preventDefault();
+
+                let submitBtn = $(this).find("button[type='submit']");
+                submitBtn.prop("disabled", true).text("Processing...");
+
+                let formData = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('purchase.plan') }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+
+                        // ✅ Case 1: New Plan Purchased Successfully
+                        if (response.status === "success") {
+                            Swal.fire({
+                                title: "Success",
+                                text: response.message,
+                                icon: "success",
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+
                             $("#purchasePlanModal").modal("hide");
 
                             if (response.redirect_url) {
                                 setTimeout(() => {
                                     window.location.href = response.redirect_url;
-                                }, 1000);
-                            }
-                        },
-                        error: function(xhr) {
-                            let res = xhr.responseJSON;
-                            if (res && res.errors) {
-                                let messages = Object.values(res.errors).flat().join('<br>');
-                                Swal.fire("Validation Error", messages, "error");
-                            } else {
-                                Swal.fire("Error", res.message || "Something went wrong.", "error");
+                                }, 1500);
                             }
                         }
-                    });
+
+                        // ✅ Case 2: Already Pending Plan → Auto Redirect to Payment Page
+                        else if (response.status === "error" && response.redirect_url) {
+                            Swal.fire({
+                                title: "Pending Plan",
+                                html: `${response.message}<br><b>Redirecting to payment page...</b>`,
+                                icon: "info",
+                                timer: 2500,
+                                showConfirmButton: false,
+                                didOpen: () => {
+                                    setTimeout(() => {
+                                        window.location.href = response.redirect_url;
+                                    }, 2500);
+                                }
+                            });
+                        }
+
+                        // ✅ Case 3: Other Error
+                        else {
+                            Swal.fire("Error", response.message || "Something went wrong.", "error");
+                        }
+                    },
+
+                    error: function(xhr) {
+                        let res = xhr.responseJSON;
+
+                        if (res && res.errors) {
+                            let messages = Object.values(res.errors).flat().join('<br>');
+                            Swal.fire("Validation Error", messages, "error");
+                        } 
+                        else if (res && res.redirect_url) {
+                            // 🔁 Auto Redirect even if error type response
+                            Swal.fire({
+                                title: "Pending Plan",
+                                html: `${res.message}<br><b>Redirecting to payment page...</b>`,
+                                icon: "info",
+                                timer: 2500,
+                                showConfirmButton: false,
+                                didOpen: () => {
+                                    setTimeout(() => {
+                                        window.location.href = res.redirect_url;
+                                    }, 2500);
+                                }
+                            });
+                        } 
+                        else {
+                            Swal.fire("Error", res.message || "Something went wrong.", "error");
+                        }
+
+                        submitBtn.prop("disabled", false).text("Submit");
+                    }
                 });
+            });
                 if (isLoggedIn == "1") {
                     $.ajax({
                         url: "{{ route('check.active.plan') }}",
@@ -223,7 +308,5 @@
             }
 
         </script>
-        
        
-    
 @endsection

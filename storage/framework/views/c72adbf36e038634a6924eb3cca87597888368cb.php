@@ -1,6 +1,6 @@
-@extends('front.layouts.master')
-@section('title','Payment')
-@section('content')
+
+<?php $__env->startSection('title','Payment'); ?>
+<?php $__env->startSection('content'); ?>
 
 <style>
     .page-title-section{
@@ -26,17 +26,19 @@
 
                     <div class="border-top border-bottom py-3 mb-3">
                         <h4 class="mb-2 text-dark">
-                            <strong>Plan:</strong> {{ $purchase->plan_name }}
+                            <strong>Plan:</strong> <?php echo e($purchase->plan_name); ?>
+
                         </h4>
                         <h4 class="text-success fw-bold">
-                            <strong>Price:</strong> ₹{{ number_format($purchase->price, 2) }}
+                            <strong>Price:</strong> ₹<?php echo e(number_format($purchase->price, 2)); ?>
+
                         </h4>
                     </div>
 
                     <h3 class="mb-3 text-primary fw-semibold">Scan the QR Code to Pay</h3>
 
                     <div class="qr-wrapper mb-3">
-                        <img src="{{ asset('public/assets/front/mains.jpeg') }}" 
+                        <img src="<?php echo e(asset('public/assets/front/mains.jpeg')); ?>" 
                              alt="QR Code" 
                              class="img-fluid rounded shadow-lg border border-3 border-light"
                              style="max-width: 280px; transition: transform 0.3s ease;">
@@ -47,10 +49,11 @@
                         You will receive a confirmation email about the activation of your plan within 24 hours.
                     </p>
 
-                    <a href="https://wa.me/{{$settingsData->whatsapp}}" 
+                    <a href="https://wa.me/<?php echo e($settingsData->whatsapp); ?>" 
                        target="_blank"
                        class="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm">
-                        <i class="bi bi-whatsapp me-2"></i>{{$settingsData->whatsapp}}
+                        <i class="bi bi-whatsapp me-2"></i><?php echo e($settingsData->whatsapp); ?>
+
                     </a>
 
                 </div>
@@ -65,11 +68,12 @@
         .card {
             animation: fadeInUp 0.8s ease;
         }
-        @keyframes fadeInUp {
+        @keyframes  fadeInUp {
             from {opacity: 0; transform: translateY(40px);}
             to {opacity: 1; transform: translateY(0);}
         }
     </style>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('front.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\rayss\mainsorbitnew\public_html\resources\views/front/payment.blade.php ENDPATH**/ ?>

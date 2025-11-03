@@ -317,7 +317,7 @@
     
     
 
-        
+    
 
 <script type="module">
     // ✅ Firebase SDK Import Karein
@@ -357,15 +357,15 @@
                             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || ""
                         },
                         body: JSON.stringify({
-                            name: user.displayName,
+                            // name: user.displayName,
                             email: user.email,
-                            state: selectedState  // ✅ State bhi send karna hai
+                            state: selectedState  
                         })
                     })
                     .then(response => response.json())
                     .then(data => {
                         console.log("User Saved:", data);
-                        window.location.href = 'https://mainsorbit.com/userCount';
+                        window.location.href = 'https://mainsorbit.com/answerForm';
                     })
                     .catch(error => console.error("Fetch Error:", error));
                 })
