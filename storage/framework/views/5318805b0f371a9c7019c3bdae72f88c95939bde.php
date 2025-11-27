@@ -1,6 +1,6 @@
-@extends('admin.layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
 <section class="content-header">					
@@ -17,7 +17,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="container-fluid">
-        @include('admin.message')
+        <?php echo $__env->make('admin.message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card">
            
             <div class="card-body table-responsive p-0 mt-2">								
@@ -36,33 +36,33 @@
                     </thead>
                     <tbody>
                         <?php $i =1;?>
-                        @foreach ($enquery as $enq)
+                        <?php $__currentLoopData = $enquery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $enq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>{{$i++}}</td>
-                            <td>{{$enq->name}}</td>
-                            <td> {{$enq->email}}</td>
+                            <td><?php echo e($i++); ?></td>
+                            <td><?php echo e($enq->name); ?></td>
+                            <td> <?php echo e($enq->email); ?></td>
                             
-                            <td>{{$enq->mobile}}</td>
+                            <td><?php echo e($enq->mobile); ?></td>
                             <td>
                                 <button class="btn btn-sm btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#viewModal"
-                                    data-content="{{ $enq->message }}"
+                                    data-content="<?php echo e($enq->message); ?>"
                                     data-title="Message">
                                     View
                                 </button>
                             </td>
-                            <td>{{$enq->state}}</td>
+                            <td><?php echo e($enq->state); ?></td>
                             
                             <td>
-                                <a href="{{route('enquerylist.delete',$enq->id)}}" class="text-danger" onclick="return confirm('Are you sure you want to delete this?');">
+                                <a href="<?php echo e(route('enquerylist.delete',$enq->id)); ?>" class="text-danger" onclick="return confirm('Are you sure you want to delete this?');">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                     </svg>
                                 </a>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         
                     </tbody>
                 </table>
@@ -104,9 +104,9 @@
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('customJs')
+<?php $__env->startSection('customJs'); ?>
     <!-- DataTables Core + Bootstrap Integration -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -136,4 +136,5 @@
     
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\priyanka\mainsorbitnew\resources\views/admin/enquery.blade.php ENDPATH**/ ?>
